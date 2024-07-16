@@ -1,4 +1,7 @@
+# Don't remove any of these
 /node_modules
 .env
 next-env.d.ts
 /.next
+
+# Add your ignores after this line
