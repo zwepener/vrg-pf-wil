@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {},
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "ritwickdey.liveserver",
+      "bradlc.vscode-tailwindcss",
+      "rangav.vscode-thunder-client",
+      "heybourn.headwind",
+      "stivo.tailwind-fold"
+    ]
+  }
+}
