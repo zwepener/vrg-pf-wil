@@ -1,11 +1,9 @@
-"use server";
-
 import { Logo } from "../assets";
 import Container from "../container";
 import FaIcon from "../fa-icon";
 import NavLinks from "./nav-links";
 
-const TopNav = async () => (
+const TopNav = () => (
   <header className="header" data-header>
     <div className="overlay" data-overlay></div>
 
