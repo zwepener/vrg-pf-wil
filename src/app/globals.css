@@ -1,3 +1,5 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,12 +25,30 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
+
     --radius: 0.5rem;
+
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    --dark-jungle-green: 160 60% 15%;
+    --prussian-blue: 230 80% 25%;
+    --raisin-black-1: 240 30% 20%;
+    --raisin-black-2: 245 25% 30%;
+    --yellow-green: 75 80% 50%;
+    --orange-soda: 20 100% 65%;
+    --cultured-1: 0 0% 85%;
+    --cultured-2: 210 40% 95%;
+    --misty-rose: 0 70% 95%;
+    --alice-blue: 190 100% 98%;
+    --seashell: 30 100% 95%;
+    --cadet: 220 30% 50%;
+    --white: 0 0% 100%;
+    --black: 0 0% 0%;
+    --opal: 160 40% 70%;
   }
 
   .dark {
