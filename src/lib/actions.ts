@@ -24,7 +24,7 @@ export async function updateUserProp<K extends keyof EditableUserProperties>(
     await sql`
       UPDATE users
       SET
-        ${property} = ${newValue},
+        ${property} = ${newValue instanceof Array ? `{${newValue.join(", ")}}` : newValue},
         updated_at = CURRENT_TIMESTAMP
       WHERE id = ${userId};
     `;
@@ -79,11 +79,14 @@ export async function updatePropertyProp<
 ): Promise<void> {
   if (!isUUID(propertyId))
     throw new Error("Received an invalid argument: " + propertyId);
+  if (newValue instanceof Array) {
+
+  }
   try {
     await sql`
       UPDATE properties
       SET
-        ${property} = ${newValue},
+        ${property} = ${newValue instanceof Array ? `{${newValue.join(", ")}}` : newValue},
         updated_at = CURRENT_TIMESTAMP
       WHERE id = ${propertyId}
     `;
