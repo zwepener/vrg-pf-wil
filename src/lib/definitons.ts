@@ -7,6 +7,9 @@ export const RawUserSchema = z.object({
   firstname: z.string(),
   lastname: z.string(),
   email: z.string().email().nullable(),
+  avatar: z.string().url().nullable(),
+  favorites: z.array(z.string().uuid()),
+  wishlist: z.array(z.string().uuid()),
   display_name: z.string(),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
   created_at: z.coerce.date({
@@ -53,6 +56,7 @@ export const PropertySchema = z.object({
   zip_code: z.string(),
   city: z.string(),
   street_address: z.string(),
+  images: z.array(z.string().url()),
   featured: z.boolean(),
   delisted: z.boolean(),
   enlisted_at: z.coerce.date({
