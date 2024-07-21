@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const RawUserSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   username: z.string(),
   password: z.string(),
   firstname: z.string(),
   lastname: z.string(),
   email: z.string().email().nullable(),
-  avatar: z.string().url().nullable(),
+  avatar_url: z.string().url().nullable(),
   favorites: z.array(z.string().uuid()),
   wishlist: z.array(z.string().uuid()),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
@@ -37,8 +37,8 @@ export type EditableUserProperties = z.infer<
 >;
 
 export const RawPropertySchema = z.object({
-  id: z.string().uuid(),
-  agent_id: z.string().uuid(),
+  id: z.string(),
+  agent_id: z.string(),
   title: z.string().min(1, "Property Title is empty."),
   description: z.string().min(1, "Property Description is empty."),
   listing_type: z.union([z.literal("rent"), z.literal("sell")]),
@@ -49,14 +49,14 @@ export const RawPropertySchema = z.object({
   images: z.array(z.string().url()),
   featured: z.boolean(),
   delisted: z.boolean(),
-  enlisted_at: z.coerce.date(),
+  listed_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 });
 export type RawProperty = z.infer<typeof RawPropertySchema>;
 
 const EditablePropertyPropertiesSchema = RawPropertySchema.omit({
   id: true,
-  enlisted_at: true,
+  listed_at: true,
   updated_at: true,
 });
 export type EditablePropertyProperties = z.infer<
