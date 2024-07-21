@@ -13,7 +13,7 @@ export default async function BlogPage() {
       <Container>
         <p className="section-subtitle">News & Blogs</p>
 
-        <h2 className="h2 section-title">Leatest News Feeds</h2>
+        <h2 className="h2 section-title">Latest News Feeds</h2>
 
         <ul className="blog-list has-scrollbar">
           <li>

@@ -48,6 +48,7 @@ const CardFooter = ({
 );
 
 interface CardContentProps {
+  type: "rent" | "sell";
   price: number;
   title: string;
   description: string;
@@ -56,6 +57,7 @@ interface CardContentProps {
   area: number;
 }
 const CardContent = ({
+  type,
   price,
   title,
   description,
@@ -65,7 +67,8 @@ const CardContent = ({
 }: CardContentProps) => (
   <div className="card-content">
     <div className="card-price">
-      <strong>{`R${price}`}</strong>/Month
+      <strong>{`R${price}`}</strong>
+      {type === "rent" ? " / Month" : ""}
     </div>
     <h3 className="h3 card-title">
       <a href="#">{title}</a>
@@ -94,7 +97,7 @@ const CardContent = ({
 interface CardBannerProps {
   img: string | StaticImport;
   alt: string;
-  type: "Rent" | "Sale";
+  type: "rent" | "sell";
   address: string;
   photos: number;
   videos: number;
@@ -111,9 +114,9 @@ const CardBanner = ({
     <a href="#">
       <Image src={img} alt={alt} className="w-100" />
     </a>
-    <div
-      className={`card-badge ${type === "Rent" ? "green" : "orange"}`}
-    >{`For ${type}`}</div>
+    <div className={`card-badge ${type === "rent" ? "green" : "orange"}`}>
+      {type === "rent" ? "To Let" : "For Sale"}
+    </div>
     <div className="banner-actions">
       <button className="banner-actions-btn">
         <FaIcon icon="location-dot" />
@@ -147,12 +150,13 @@ export default async function PropertyPage() {
               <CardBanner
                 img={property_1}
                 alt="New Apartment Nice View"
-                type="Rent"
+                type="rent"
                 address="Belmont Gardens, Chicago"
                 photos={4}
                 videos={2}
               />
               <CardContent
+                type="rent"
                 price={638000}
                 title="New Apartment Nice View"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
@@ -172,12 +176,13 @@ export default async function PropertyPage() {
               <CardBanner
                 img={property_2}
                 alt="Modern Apartments"
-                type="Sale"
+                type="sell"
                 address="Belmont Gardens, Chicago"
                 photos={4}
                 videos={2}
               />
               <CardContent
+                type="sell"
                 price={638000}
                 title="Modern Apartments"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
@@ -197,12 +202,13 @@ export default async function PropertyPage() {
               <CardBanner
                 img={property_3}
                 alt="Comfortable Apartment"
-                type="Rent"
+                type="rent"
                 address="Belmont Gardens, Chicago"
                 photos={4}
                 videos={2}
               />
               <CardContent
+                type="rent"
                 price={638000}
                 title="Comfortable Apartment"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
@@ -222,12 +228,13 @@ export default async function PropertyPage() {
               <CardBanner
                 img={property_4}
                 alt="Luxury villa in Rego Park"
-                type="Sale"
+                type="sell"
                 address="Belmont Gardens, Chicago"
                 photos={4}
                 videos={2}
               />
               <CardContent
+                type="sell"
                 price={638000}
                 title="Luxury villa in Rego Park"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
