@@ -56,8 +56,8 @@ export default async function AboutPage() {
             </li>
           </ul>
           <p className="callout">
-            "Enimad minim veniam quis nostrud exercitation llamco laboris. Lorem
-            ipsum dolor sit amet"
+            {`"Enimad minim veniam quis nostrud exercitation llamco laboris. Lorem
+            ipsum dolor sit amet"`}
           </p>
           <Link href="/service" className="btn">
             Our Services

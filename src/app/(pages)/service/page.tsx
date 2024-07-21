@@ -162,7 +162,7 @@ export default async function ServicePage() {
                 <div className="card-icon">
                   <FaIcon icon="basketball" />
                 </div>
-                <h3 className="card-title">Kid's Playland</h3>
+                <h3 className="card-title">{`Kid's Playland`}</h3>
                 <div className="card-btn">
                   <FaIcon icon="arrow-right-long" />
                 </div>
