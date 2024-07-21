@@ -16,42 +16,9 @@ const TopNav = () => (
               <span>realhome@gmail.com</span>
             </a>
           </li>
-
-          <li>
-            <a href="#" className="header-top-link">
-              <FaIcon icon="location-dot" />
-              <address>N / A</address>
-            </a>
-          </li>
         </ul>
 
         <div className="wrapper flex">
-          <ul className="header-top-social-list">
-            <li>
-              <a href="#" className="header-top-social-link">
-                <FaIcon variant="brands" icon="facebook" />
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="header-top-social-link">
-                <FaIcon variant="brands" icon="x-twitter" />
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="header-top-social-link">
-                <FaIcon variant="brands" icon="instagram" />
-              </a>
-            </li>
-
-            <li>
-              <a href="#" className="header-top-social-link">
-                <FaIcon variant="brands" icon="pinterest" />
-              </a>
-            </li>
-          </ul>
-
           <button className="header-top-btn">Add Listing</button>
         </div>
       </Container>
@@ -123,44 +90,9 @@ const FooterNav = async () => (
 
           <ul className="contact-list">
             <li>
-              <a href="#" className="contact-link">
-                <FaIcon icon="location-dot" />
-                <address>N / A</address>
-              </a>
-            </li>
-            <li>
-              <a href="tel:" className="contact-link">
-                <FaIcon icon="phone" />
-                <span>N / A</span>
-              </a>
-            </li>
-            <li>
               <a href="mailto:realhome@gmail.com" className="contact-link">
                 <FaIcon icon="envelope" />
                 <span>realhome@gmail.com</span>
-              </a>
-            </li>
-          </ul>
-
-          <ul className="social-list">
-            <li>
-              <a href="#" className="social-link">
-                <FaIcon variant="brands" icon="facebook" />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="social-link">
-                <FaIcon variant="brands" icon="x-twitter" />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="social-link">
-                <FaIcon variant="brands" icon="linkedin" />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="social-link">
-                <FaIcon variant="brands" icon="youtube" />
               </a>
             </li>
           </ul>
