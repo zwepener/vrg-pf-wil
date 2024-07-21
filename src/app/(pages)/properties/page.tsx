@@ -65,7 +65,7 @@ const CardContent = ({
 }: CardContentProps) => (
   <div className="card-content">
     <div className="card-price">
-      <strong>{`$${price}`}</strong>/Month
+      <strong>{`R${price}`}</strong>/Month
     </div>
     <h3 className="h3 card-title">
       <a href="#">{title}</a>
@@ -153,7 +153,7 @@ export default async function PropertyPage() {
                 videos={2}
               />
               <CardContent
-                price={34900}
+                price={638000}
                 title="New Apartment Nice View"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
                 bedrooms={3}
@@ -178,7 +178,7 @@ export default async function PropertyPage() {
                 videos={2}
               />
               <CardContent
-                price={34900}
+                price={638000}
                 title="Modern Apartments"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
                 bedrooms={3}
@@ -203,7 +203,7 @@ export default async function PropertyPage() {
                 videos={2}
               />
               <CardContent
-                price={34900}
+                price={638000}
                 title="Comfortable Apartment"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
                 bedrooms={3}
@@ -228,7 +228,7 @@ export default async function PropertyPage() {
                 videos={2}
               />
               <CardContent
-                price={34900}
+                price={638000}
                 title="Luxury villa in Rego Park"
                 description="Beautiful Huge 1 Family House In Heart Of Westbury. Newly Renovated With New Wood"
                 bedrooms={3}
