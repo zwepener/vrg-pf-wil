@@ -10,16 +10,9 @@ export const RawUserSchema = z.object({
   avatar: z.string().url().nullable(),
   favorites: z.array(z.string().uuid()),
   wishlist: z.array(z.string().uuid()),
-  display_name: z.string(),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
-  created_at: z.coerce.date({
-    invalid_type_error: "User Created At value is not a valid date.",
-    message: "Not a valid date.",
-  }),
-  updated_at: z.coerce.date({
-    invalid_type_error: "User Updated At value is not a valid date.",
-    message: "Not a valid date.",
-  }),
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
 });
 export type RawUser = z.infer<typeof RawUserSchema>;
 
@@ -43,14 +36,15 @@ export type EditableUserProperties = z.infer<
   typeof EditableUserPropertiesSchema
 >;
 
-export const PropertySchema = z.object({
-  id: z.string().min(1, "Property ID is empty.").uuid(),
+export const RawPropertySchema = z.object({
+  id: z.string().uuid(),
   agent_id: z.string().uuid(),
   title: z.string().min(1, "Property Title is empty."),
   description: z.string().min(1, "Property Description is empty."),
-  price: z.number(),
-  bedrooms: z.number(),
-  bathrooms: z.number(),
+  listing_type: z.union([z.literal("rent"), z.literal("sell")]),
+  price: z.number().min(0, "Property's price cannot be less than 0."),
+  bedrooms: z.number().min(1, "Property cannot have less than 1 bedrooms."),
+  bathrooms: z.number().min(1, "Property cannot have less than 1 bathrooms."),
   country: z.string(),
   state: z.string(),
   zip_code: z.string(),
@@ -59,18 +53,12 @@ export const PropertySchema = z.object({
   images: z.array(z.string().url()),
   featured: z.boolean(),
   delisted: z.boolean(),
-  enlisted_at: z.coerce.date({
-    invalid_type_error: "Property Enlisted At value is not a valid date.",
-    message: "Not a valid date.",
-  }),
-  updated_at: z.coerce.date({
-    invalid_type_error: "Property Updated At value is not a valid date.",
-    message: "Not a valid date.",
-  }),
+  enlisted_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
 });
-export type Property = z.infer<typeof PropertySchema>;
+export type RawProperty = z.infer<typeof RawPropertySchema>;
 
-const EditablePropertyPropertiesSchema = PropertySchema.omit({
+const EditablePropertyPropertiesSchema = RawPropertySchema.omit({
   id: true,
   enlisted_at: true,
   updated_at: true,
