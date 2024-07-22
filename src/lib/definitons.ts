@@ -8,8 +8,8 @@ export const RawUserSchema = z.object({
   lastname: z.string(),
   email: z.string().email().nullable(),
   avatar_url: z.string().url().nullable(),
-  favorites: z.array(z.string().uuid()),
-  wishlist: z.array(z.string().uuid()),
+  favorites: z.array(z.string().uuid()).nullable(),
+  wishlist: z.array(z.string().uuid()).nullable(),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
@@ -19,11 +19,11 @@ export type RawUser = z.infer<typeof RawUserSchema>;
 export const UserSchema = RawUserSchema.omit({ password: true });
 export type User = z.infer<typeof UserSchema>;
 
-export const NewUserSchema = RawUserSchema.omit({
-  id: true,
-  role: true,
-  created_at: true,
-  updated_at: true,
+export const NewUserSchema = RawUserSchema.pick({
+  username: true,
+  password: true,
+  firstname: true,
+  lastname: true,
 });
 export type NewUser = z.infer<typeof NewUserSchema>;
 
@@ -49,14 +49,26 @@ export const RawPropertySchema = z.object({
   images: z.array(z.string().url()),
   featured: z.boolean(),
   delisted: z.boolean(),
-  listed_at: z.coerce.date(),
+  added_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 });
 export type RawProperty = z.infer<typeof RawPropertySchema>;
 
+export const NewPropertySchema = RawPropertySchema.pick({
+  title: true,
+  description: true,
+  listing_type: true,
+  price: true,
+  bedrooms: true,
+  bathrooms: true,
+  address: true,
+  images: true,
+});
+export type NewProperty = z.infer<typeof NewPropertySchema>;
+
 const EditablePropertyPropertiesSchema = RawPropertySchema.omit({
   id: true,
-  listed_at: true,
+  added_at: true,
   updated_at: true,
 });
 export type EditablePropertyProperties = z.infer<

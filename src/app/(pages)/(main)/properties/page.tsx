@@ -7,9 +7,9 @@ import property_3 from "@/assets/images/property-3.jpg";
 import property_4 from "@/assets/images/property-4.png";
 import Container from "@/components/ui/container";
 import FaIcon from "@/components/ui/fa-icon";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface CardFooterProps {
   author_img: string | StaticImport;
@@ -102,14 +102,7 @@ interface CardBannerProps {
   photos: number;
   videos: number;
 }
-const CardBanner = ({
-  img,
-  alt,
-  type,
-  address,
-  photos,
-  videos,
-}: CardBannerProps) => (
+const CardBanner = ({ img, alt, type, address, photos }: CardBannerProps) => (
   <figure className="card-banner">
     <a href="#">
       <Image src={img} alt={alt} className="w-100" />
@@ -126,10 +119,6 @@ const CardBanner = ({
         <FaIcon icon="camera" />
         <span>{photos}</span>
       </button>
-      <button className="banner-actions-btn">
-        <FaIcon icon="film" />
-        <span>{videos}</span>
-      </button>
     </div>
   </figure>
 );
@@ -138,7 +127,7 @@ const PropertyCard = ({ children }: { children: ReactNode }) => (
   <div className="property-card">{children}</div>
 );
 
-export default async function PropertyPage() {
+export default async function Page() {
   return (
     <div className="property">
       <Container>

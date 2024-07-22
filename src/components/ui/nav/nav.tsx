@@ -57,11 +57,6 @@ const TopNav = () => (
             <span>Profile</span>
           </button>
 
-          <button className="header-bottom-actions-btn" aria-label="Cart">
-            <FaIcon icon="cart-shopping" />
-            <span>Cart</span>
-          </button>
-
           <button
             className="header-bottom-actions-btn"
             data-nav-open-btn
@@ -110,11 +105,6 @@ const FooterNav = async () => (
             </li>
             <li>
               <a href="#" className="footer-link">
-                Blog
-              </a>
-            </li>
-            <li>
-              <a href="#" className="footer-link">
                 All Products
               </a>
             </li>
@@ -138,11 +128,6 @@ const FooterNav = async () => (
           <ul className="footer-list">
             <li>
               <p className="footer-list-title">Services</p>
-            </li>
-            <li>
-              <a href="#" className="footer-link">
-                Order tracking
-              </a>
             </li>
             <li>
               <a href="#" className="footer-link">
@@ -188,16 +173,6 @@ const FooterNav = async () => (
             <li>
               <a href="#" className="footer-link">
                 Wish List
-              </a>
-            </li>
-            <li>
-              <a href="#" className="footer-link">
-                Order tracking
-              </a>
-            </li>
-            <li>
-              <a href="#" className="footer-link">
-                FAQ
               </a>
             </li>
             <li>

@@ -954,87 +954,6 @@ a {
 }
 
 /*-----------------------------------*\
-    #BLOG
-  \*-----------------------------------*/
-
-.blog {
-  padding-block: var(--section-padding);
-}
-
-.blog-card {
-  box-shadow: var(--shadow-2);
-}
-
-.blog-card .card-banner {
-  overflow: hidden;
-  aspect-ratio: 2 / 1.5;
-}
-
-.blog-card .card-banner img {
-  height: 100%;
-  object-fit: cover;
-  transition: 0.5s ease;
-}
-
-.blog-card:is(:hover, :focus) .card-banner img {
-  transform: scale(1.1);
-}
-
-.blog-content {
-  padding: 30px;
-}
-
-.blog-card .card-meta-list {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.blog-card :is(.card-meta-link, .publish-date) {
-  color: var(--cadet);
-  font-size: var(--fs-7);
-  font-weight: var(--fw-600);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: var(--transition);
-}
-
-.blog-card :is(.card-meta-link, .publish-date) .fa-icon {
-  color: var(--orange-soda);
-}
-
-.blog-card .card-meta-link:is(:hover, :focus) {
-  color: var(--orange-soda);
-}
-
-.blog-title {
-  font-size: 1rem;
-  --font-weight: var(--fw-600);
-}
-
-.blog-card .blog-title:is(:hover, :focus) {
-  color: var(--orange-soda);
-}
-
-.blog-content-bottom {
-  padding-top: 20px;
-  border-top: 1px solid hsla(0, 0%, 0%, 0.1);
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.blog-card .read-more-btn {
-  color: var(--orange-soda);
-  font-size: var(--fs-7);
-  font-weight: var(--fw-600);
-  text-transform: uppercase;
-}
-
-/*-----------------------------------*\
     #CTA
   \*-----------------------------------*/
 
@@ -1393,22 +1312,6 @@ a {
   }
 
   /**
-     * BLOG
-     */
-
-  .blog-card {
-    --fs-7: 0.875rem;
-  }
-
-  .blog-title {
-    font-size: 1.25rem;
-  }
-
-  .blog .card-meta-list {
-    gap: 30px;
-  }
-
-  /**
      * CTA
      */
 
@@ -1531,14 +1434,6 @@ a {
   }
 
   /**
-     * BLOG
-     */
-
-  .blog-title {
-    font-size: 1.375rem;
-  }
-
-  /**
      * CTA
      */
 
@@ -1557,8 +1452,8 @@ a {
   }
 
   /**
-     * FOOTER
-     */
+    * FOOTER
+    */
 
   .footer-top .container {
     display: flex;

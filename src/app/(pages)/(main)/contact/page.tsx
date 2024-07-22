@@ -2,7 +2,7 @@
 
 import Container from "@/components/ui/container";
 
-export default async function ContactPage() {
+export default async function Page() {
   return (
     <div className="contact">
       <Container>

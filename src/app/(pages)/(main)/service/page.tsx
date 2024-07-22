@@ -7,7 +7,7 @@ import Container from "@/components/ui/container";
 import FaIcon from "@/components/ui/fa-icon";
 import Image from "next/image";
 
-export default async function ServicePage() {
+export default async function Page() {
   return (
     <>
       <div className="service">

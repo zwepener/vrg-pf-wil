@@ -7,7 +7,7 @@ import FaIcon from "@/components/ui/fa-icon";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function AboutPage() {
+export default async function Page() {
   return (
     <div className="about">
       <Container>

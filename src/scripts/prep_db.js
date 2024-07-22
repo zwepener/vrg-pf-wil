@@ -42,9 +42,9 @@ const createUsersTable = async () => {
       avatar_url TEXT,
       favorites TEXT[],
       wishlist TEXT[],
-      role VARCHAR(50),
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      role VARCHAR(50) DEFAULT "user" NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
     );
   `;
 };
@@ -57,15 +57,15 @@ const createPropertiesTable = async () => {
       title VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
       listing_type VARCHAR(255) NOT NULL,
-      price NUMERIC(15),
+      price NUMERIC(15) NOT NULL,
       bedrooms SMALLINT NOT NULL,
       bathrooms SMALLINT NOT NULL,
       address TEXT NOT NULL,
       images TEXT[],
-      featured BOOLEAN,
-      delisted BOOLEAN,
-      listed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      featured BOOLEAN DEFAULT false NOT NULL,
+      delisted BOOLEAN DEFAULT false NOT NULL,
+      added_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
     );
   `;
 };

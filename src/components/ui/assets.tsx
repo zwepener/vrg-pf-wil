@@ -1,6 +1,4 @@
 import hero_banner from "@/assets/images/hero-banner.png";
-import logo_dark from "@/assets/images/logo.png";
-import logo_light from "@/assets/images/logo-light.png";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,10 +10,10 @@ export const Logo = ({
   className?: string;
 }) => (
   <Link href="/" className="logo">
-    <Image
+    {/* <Image
       src={variant === "dark" ? logo_dark : logo_light}
       alt="RealHome logo"
-    />
+    /> */}
   </Link>
 );
 
