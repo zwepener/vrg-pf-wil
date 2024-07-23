@@ -91,7 +91,7 @@ export default function AddForm() {
               <FormControl>
                 <Select>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Listing Type" />
+                    <SelectValue placeholder="Listing Type" {...field} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="rent">To Let</SelectItem>
