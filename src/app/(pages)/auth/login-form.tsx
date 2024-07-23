@@ -91,7 +91,7 @@ export default function LoginForm() {
     if (form.formState.isSubmitSuccessful) {
       router.push(callbackUrl ?? "/");
     }
-  }, [form.formState.isSubmitSuccessful]);
+  }, [form.formState.isSubmitSuccessful, router, callbackUrl]);
 
   return (
     <Form {...form}>

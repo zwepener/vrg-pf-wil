@@ -1,9 +1,9 @@
 "use server";
 
-import { fetchUser } from "@/lib/data";
+import { fetchUserById } from "@/lib/data";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const user = await fetchUser(params.id);
+  const user = await fetchUserById(params.id);
   return (
     <ul>
       {Object.entries(user).map(([key, value]) => (

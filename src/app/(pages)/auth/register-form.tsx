@@ -87,7 +87,7 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) form.reset();
-  }, [form.formState.isSubmitSuccessful]);
+  }, [form.formState.isSubmitSuccessful, form]);
 
   return (
     <Form {...form}>
