@@ -23,14 +23,14 @@ export default async function Page({ params }: { params: { id: string } }) {
       <section id="details">
         <ul>
           {Object.entries(property).map(([key, value]) => (
-            <li>{`${key}: ${value}`}</li>
+            <li key={key}>{`${key}: ${value}`}</li>
           ))}
         </ul>
       </section>
 
       <section id="images">
         {image_urls.map((image_url, index) => (
-          <Image src={image_url} alt={`Image ${index}`} />
+          <Image src={image_url} alt={`Image ${index}`} key={index} />
         ))}
       </section>
 
