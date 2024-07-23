@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import FaIcon from "@/components/ui/fa-icon";
 import {
   Form,
   FormControl,
@@ -11,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import LoadingSVG from "@/components/ui/loading-svg";
 import {
   Select,
   SelectContent,
@@ -21,15 +23,19 @@ import {
 import { NewPropertySchema, type NewProperty } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { NextResponse } from "next/server";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function AddForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<NewProperty>({
     resolver: zodResolver(NewPropertySchema),
     defaultValues: {},
   });
   async function onSubmit(values: NewProperty) {
     try {
+      setIsLoading(true);
       const response = (await fetch("/api/property/add", {
         method: "POST",
         headers: {
@@ -41,6 +47,8 @@ export default function AddForm() {
     } catch (error) {
       console.error(error);
       return;
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -122,7 +130,19 @@ export default function AddForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="w-full space-x-1">
+          {isLoading ? (
+            <>
+              <LoadingSVG />
+              <span>Logging in . . .</span>
+            </>
+          ) : (
+            <>
+              <FaIcon icon="plus" />
+              <span>Add Property</span>
+            </>
+          )}
+        </Button>
       </form>
     </Form>
   );

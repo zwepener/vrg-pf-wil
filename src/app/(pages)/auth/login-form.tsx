@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingSVG from "@/components/ui/loading-svg";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/toast/use-toast";
 import { RawUserSchema } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -19,6 +19,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import FaIcon from "@/components/ui/fa-icon";
 
 const formScheam = RawUserSchema.pick({
   username: true,
@@ -88,7 +89,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
-      router.push(callbackUrl ?? "/home");
+      router.push(callbackUrl ?? "/");
     }
   }, [form.formState.isSubmitSuccessful]);
 
@@ -110,10 +111,7 @@ export default function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="space-x-1">
-                <i className="fa-solid fa-user" />
-                <span>Username</span>
-              </FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your username..." {...field} />
               </FormControl>
@@ -126,10 +124,7 @@ export default function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="space-x-1">
-                <i className="fa-solid fa-lock" />
-                <span>Password</span>
-              </FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -149,7 +144,7 @@ export default function LoginForm() {
             </>
           ) : (
             <>
-              <i className="fa-solid fa-right-to-bracket" />
+              <FaIcon icon="right-to-bracket" />
               <span>Log in</span>
             </>
           )}

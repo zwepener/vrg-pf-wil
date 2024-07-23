@@ -42,7 +42,7 @@ const createUsersTable = async () => {
       avatar_url TEXT,
       favorites TEXT[],
       wishlist TEXT[],
-      role VARCHAR(50) DEFAULT "user" NOT NULL,
+      role VARCHAR(50) DEFAULT 'user' NOT NULL,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
     );

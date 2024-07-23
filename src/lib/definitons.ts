@@ -2,14 +2,23 @@ import { z } from "zod";
 
 export const RawUserSchema = z.object({
   id: z.string(),
-  username: z.string(),
-  password: z.string(),
-  firstname: z.string(),
-  lastname: z.string(),
-  email: z.string().email().nullable(),
+  username: z
+    .string()
+    .min(1, "Username is empty.")
+    .max(255, "Username is too long (Max is 255 characters)."),
+  password: z.string().min(1, "Password is empty."),
+  firstname: z
+    .string()
+    .min(1, "Firstname is empty.")
+    .max(255, "Firstname is too long (Max is 255 characters)."),
+  lastname: z
+    .string()
+    .min(1, "Lastname is empty.")
+    .max(255, "Lastname is too long (Max is 255 characters)."),
+  email: z.string().email("Not a valid email.").nullable(),
   avatar_url: z.string().url().nullable(),
-  favorites: z.array(z.string().uuid()).nullable(),
-  wishlist: z.array(z.string().uuid()).nullable(),
+  favorites: z.array(z.string()).nullable(),
+  wishlist: z.array(z.string()).nullable(),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
@@ -80,6 +89,7 @@ export type NewProperty = z.infer<typeof NewPropertySchema>;
 
 const EditablePropertyPropertiesSchema = RawPropertySchema.omit({
   id: true,
+  images: true,
   added_at: true,
   updated_at: true,
 });

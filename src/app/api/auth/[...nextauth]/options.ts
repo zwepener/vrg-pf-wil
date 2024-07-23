@@ -1,4 +1,4 @@
-import { fetchUser } from "@/lib/data";
+import { fetchUserByUsername } from "@/lib/data";
 import { type User, RawUserSchema } from "@/lib/definitons";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -18,7 +18,7 @@ export const authOptions = {
         }).safeParse(credentials);
 
         if (success) {
-          const rawUser = await fetchUser(data.username);
+          const rawUser = await fetchUserByUsername(data.username);
           if (!rawUser) return null;
           const { password, ...user } = rawUser;
           const bcrypt = require("bcrypt");

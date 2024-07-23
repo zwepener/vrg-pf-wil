@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import FaIcon from "@/components/ui/fa-icon";
 import {
   Form,
   FormControl,
@@ -11,13 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingSVG from "@/components/ui/loading-svg";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/toast/use-toast";
 import { NewUserSchema, type NewUser } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FaIcon from "@/components/ui/fa-icon";
 
 const formSchema = NewUserSchema.extend({
   confirmPass: z.string({ message: "Confirm Password is required." }),
@@ -46,7 +46,7 @@ export default function RegisterForm() {
         ...values,
         username: username.toLowerCase(),
       } satisfies NewUser;
-      const response = await fetch("api/create/user", {
+      const response = await fetch("api/user/create", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -107,10 +107,7 @@ export default function RegisterForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="space-x-1">
-                <FaIcon icon="user" />
-                <span>Username</span>
-              </FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your username..." {...field} />
               </FormControl>
@@ -123,10 +120,7 @@ export default function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="space-x-1">
-                <FaIcon icon="lock" />
-                <span>Password</span>
-              </FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -143,16 +137,39 @@ export default function RegisterForm() {
           name="confirmPass"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="space-x-1">
-                <FaIcon icon="check-double" />
-                <span>Confirm Password</span>
-              </FormLabel>
+              <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   placeholder="Confirm your password..."
                   {...field}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="firstname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Firstname</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your firstname..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lastname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Lastname</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your lastname..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

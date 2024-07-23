@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./temp_global.css";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toast/toaster";
+import { FooterNav, TopNav } from "@/components/ui/nav/nav";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -25,7 +26,11 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        {children}
+        <TopNav />
+        <main>
+          <article>{children}</article>
+        </main>
+        <FooterNav />
         <Toaster />
       </body>
     </html>
