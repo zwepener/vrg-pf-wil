@@ -1,10 +1,8 @@
 "use server";
 
 import { fetchProperty } from "@/lib/data";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import "dotenv/config";
 import Image from "next/image";
-import LoadingSVG from "@/components/ui/loading-svg";
+import Map from "./map";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const {
@@ -14,10 +12,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   } = await fetchProperty(params.id);
   const [lat, lng] = address.split(",").map((item) => parseFloat(item));
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_API_SECRET as string,
-    libraries: ["places"],
-  });
   return (
     <>
       <section id="details">
@@ -35,26 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       </section>
 
       <section id="map">
-        {isLoaded ? (
-          <GoogleMap
-            options={{
-              disableDefaultUI: true,
-              clickableIcons: true,
-              scrollwheel: false,
-            }}
-            zoom={14}
-            center={{ lat: lat, lng: lng }}
-            mapTypeId={google.maps.MapTypeId.ROADMAP}
-            mapContainerStyle={{ width: "800px", height: "800px" }}
-          >
-            <MarkerF position={{ lat: lat, lng: lng }} />
-          </GoogleMap>
-        ) : (
-          <>
-            <LoadingSVG />
-            <span>Loading . . .</span>
-          </>
-        )}
+        <Map lat={lat} lng={lng} />
       </section>
     </>
   );

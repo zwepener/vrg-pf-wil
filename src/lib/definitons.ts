@@ -62,7 +62,19 @@ export const NewPropertySchema = RawPropertySchema.pick({
   bedrooms: true,
   bathrooms: true,
   address: true,
-  images: true,
+}).extend({
+  images: z.array(
+    z
+      .instanceof(File)
+      .refine(
+        (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),
+        "We only support image uploads."
+      )
+      .refine(
+        (file) => file.size <= 1024 * 1024 * 4.5,
+        "File is bigger than 4.5 MB."
+      )
+  ),
 });
 export type NewProperty = z.infer<typeof NewPropertySchema>;
 
