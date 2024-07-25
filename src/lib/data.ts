@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import type { RawProperty, RawUser } from "./definitons";
+import { unstable_noStore as noStore } from 'next/cache';
 
 /**
  * Fetches user information from the database.
@@ -9,6 +10,7 @@ import type { RawProperty, RawUser } from "./definitons";
  * @throws Error if fetching user data fails.
  */
 export async function fetchUserById(userId: string): Promise<RawUser> {
+  noStore();
   try {
     const result = await sql<RawUser>`
       SELECT *
@@ -30,6 +32,7 @@ export async function fetchUserById(userId: string): Promise<RawUser> {
  * @throws Error if fetching user data fails.
  */
 export async function fetchUserByUsername(username: string): Promise<RawUser> {
+  noStore();
   try {
     const result = await sql<RawUser>`
       SELECT *
@@ -51,6 +54,7 @@ export async function fetchUserByUsername(username: string): Promise<RawUser> {
  * @throws Error if fetching the property fails.
  */
 export async function fetchProperty(propertyId: string): Promise<RawProperty> {
+  noStore();
   try {
     const result = await sql<RawProperty>`
         SELECT *
