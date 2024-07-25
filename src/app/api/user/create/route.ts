@@ -1,6 +1,6 @@
 import { insertUser } from "@/lib/actions";
 import { fetchUserByUsername } from "@/lib/data";
-import { NewUserSchema, type NewUser } from "@/lib/definitons";
+import { NewUserSchema } from "@/lib/definitons";
 import { status201, status400, status500 } from "@/lib/response_codes";
 import type { NextRequest, NextResponse } from "next/server";
 
