@@ -21,7 +21,7 @@ export default function NavLinks() {
           key={link.name}
           href={link.href}
           className={cn("navbar-link", {
-            active: pathname === link.href,
+            "text-[hsl(20,100%,65%)]": pathname === link.href,
           })}
           data-nav-link
         >

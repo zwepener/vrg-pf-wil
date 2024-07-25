@@ -101,21 +101,6 @@ export function FooterNav() {
                 <p className="footer-list-title">Company</p>
               </li>
               <li>
-                <a href="#" className="footer-link">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#" className="footer-link">
-                  Locations Map
-                </a>
-              </li>
-              <li>
-                <a href="#" className="footer-link">
-                  FAQ
-                </a>
-              </li>
-              <li>
                 <Link href="/contact" className="footer-link">
                   Contact us
                 </Link>
@@ -127,9 +112,9 @@ export function FooterNav() {
                 <p className="footer-list-title">Services</p>
               </li>
               <li>
-                <a href="#" className="footer-link">
+                <Link href="/profile/wishlist" className="footer-link">
                   Wish List
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/auth" className="footer-link">
@@ -137,19 +122,9 @@ export function FooterNav() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="footer-link">
+                <Link href="/profile" className="footer-link">
                   My account
-                </a>
-              </li>
-              <li>
-                <a href="#" className="footer-link">
-                  Terms & Conditions
-                </a>
-              </li>
-              <li>
-                <a href="#" className="footer-link">
-                  Promotional Offers
-                </a>
+                </Link>
               </li>
             </ul>
 
@@ -163,14 +138,14 @@ export function FooterNav() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="footer-link">
+                <Link href="/profile" className="footer-link">
                   My account
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="footer-link">
+                <Link href="/profile/wishlist" className="footer-link">
                   Wish List
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/contact" className="footer-link">

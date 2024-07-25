@@ -6,7 +6,7 @@ import FaIcon from "@/components/ui/fa-icon";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Page() {
   return (
     <>
       <div className="hero">
@@ -21,7 +21,9 @@ export default async function Home() {
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
               eiusmod tempor incididunt ut labore.
             </p>
-            <button className="btn">Make An Enquiry</button>
+            <Link href="/contact" className="btn w-52">
+              Make An Enquiry
+            </Link>
           </div>
           <figure className="hero-banner">
             <Image
