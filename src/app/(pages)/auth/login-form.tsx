@@ -89,7 +89,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
-      router.push(callbackUrl ?? "/");
+      router.push("/");
     }
   }, [form.formState.isSubmitSuccessful, router, callbackUrl]);
 

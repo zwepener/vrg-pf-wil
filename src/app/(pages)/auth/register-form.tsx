@@ -25,12 +25,13 @@ const formSchema = NewUserSchema.extend({
   message: "Passwords do not match!",
   path: ["confirmPass"],
 });
+type RegisterUser = z.infer<typeof formSchema>;
 
 export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<RegisterUser>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
@@ -39,7 +40,7 @@ export default function RegisterForm() {
     },
   });
 
-  async function onSubmit({ username, ...values }: z.infer<typeof formSchema>) {
+  async function onSubmit({ username, ...values }: RegisterUser) {
     try {
       setIsLoading(true);
       const requestData = {
