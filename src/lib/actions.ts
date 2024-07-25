@@ -3,14 +3,13 @@ import type {
   EditableUserProperties,
   EditablePropertyProperties,
   NewUser,
+  NewProperty,
+  RawProperty,
 } from "./definitons";
 
-export async function insertUser({
-  username,
-  password,
-  firstname,
-  lastname,
-}: NewUser): Promise<void> {
+export async function insertUser(payload: NewUser): Promise<void> {
+  const { username, password, firstname, lastname } = payload;
+
   const bcrypt = require("bcrypt");
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
@@ -91,32 +90,47 @@ export async function updateUser(
   }
 }
 
-/**
- * Updates a Real Estate Property property in the database.
- *
- * @param propertyId - The unique identifier of the property.
- * @param property - The property to update (e.g., 'price', 'description', etc.).
- * @param newValue - The new value for the specified property.
- * @throws Error if the update fails.
- */
-export async function updatePropertyProp<
-  K extends keyof EditablePropertyProperties
->(
+export async function insertPropertyGetId(
+  payload: NewProperty & { agent_id: string }
+): Promise<string> {
+  const {
+    agent_id,
+    title,
+    description,
+    listing_type,
+    price,
+    bedrooms,
+    bathrooms,
+    address,
+  } = payload;
+  try {
+    const { rows } = await sql<RawProperty>`
+      INSERT INTO properties (agent_id, title, description, listing_type, price, bedrooms, bathrooms, address)
+      VALUES (${agent_id}, ${title}, ${description}, ${listing_type}, ${price}, ${bedrooms}, ${bathrooms}, ${address})
+      RETURNING id;
+    `;
+    return rows[0].id;
+  } catch (error) {
+    console.error("Error inserting property:", error);
+    throw error;
+  }
+}
+
+export async function updatePropertyBanner(
   propertyId: string,
-  property: K,
-  newValue: EditablePropertyProperties[K]
+  bannerUrl: string
 ): Promise<void> {
   try {
     await sql`
       UPDATE properties
       SET
-        ${property} = ${newValue},
+        banner = ${bannerUrl},
         updated_at = CURRENT_TIMESTAMP
-      WHERE id = ${propertyId}
+      WHERE id = ${propertyId};
     `;
   } catch (error) {
     console.error("Database Error:\n", error);
-    throw new Error("Failed to update property.");
+    throw new Error("Failed to update property banner.");
   }
 }
 
