@@ -1,6 +1,5 @@
 "use client";
 
-import type { AddPropertyAPI } from "@/app/api/property/add/route";
 import { Button } from "@/components/ui/button";
 import FaIcon from "@/components/ui/fa-icon";
 import {
@@ -21,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/toast/use-toast";
+import type { AddPropertyAPI } from "@/lib/definitons";
 import { NewPropertySchema } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoadScript } from "@react-google-maps/api";
@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation";
 import type { NextResponse } from "next/server";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getGeocode, getLatLng } from "use-places-autocomplete";
+import { getGeocode } from "use-places-autocomplete";
 import { z } from "zod";
 import AutoCompleteInput from "./auto-complete";
 

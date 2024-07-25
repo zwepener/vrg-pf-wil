@@ -99,6 +99,20 @@ export type EditablePropertyProperties = z.infer<
   typeof EditablePropertyPropertiesSchema
 >;
 
+export const AddPropertyAPISchema = NewPropertySchema.extend({
+  banner: z
+    .instanceof(File)
+    .refine(
+      (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),
+      "We only support image uploads."
+    )
+    .refine(
+      (file) => file.size <= 1024 * 1024 * 4.5,
+      "File is bigger than 4.5 MB."
+    ),
+});
+export type AddPropertyAPI = z.infer<typeof AddPropertyAPISchema>;
+
 declare module "next-auth" {
   interface Session {
     user: User;

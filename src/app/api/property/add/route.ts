@@ -1,5 +1,5 @@
 import { insertPropertyGetId, updatePropertyBanner } from "@/lib/actions";
-import { NewPropertySchema } from "@/lib/definitons";
+import { AddPropertyAPISchema } from "@/lib/definitons";
 import {
   status201,
   status400,
@@ -9,21 +9,6 @@ import {
 import { put } from "@vercel/blob";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-export const AddPropertyAPISchema = NewPropertySchema.extend({
-  banner: z
-    .instanceof(File)
-    .refine(
-      (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),
-      "We only support image uploads."
-    )
-    .refine(
-      (file) => file.size <= 1024 * 1024 * 4.5,
-      "File is bigger than 4.5 MB."
-    ),
-});
-export type AddPropertyAPI = z.infer<typeof AddPropertyAPISchema>;
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const token = await getToken({ req: request });
