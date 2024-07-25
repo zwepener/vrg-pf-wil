@@ -11,7 +11,7 @@ export function TopNav() {
       <div className="overlay" data-overlay></div>
 
       <div className="header-top">
-        <Container>
+        <Container className="container">
           <ul className="header-top-list">
             <li>
               <a
@@ -33,7 +33,7 @@ export function TopNav() {
       </div>
 
       <div className="header-bottom">
-        <Container>
+        <Container className="container">
           <Logo variant="dark" />
 
           <nav className="navbar" data-navbar>
@@ -76,7 +76,7 @@ export function FooterNav() {
   return (
     <footer className="footer">
       <div className="footer-top">
-        <Container>
+        <Container className="container">
           <div className="footer-brand">
             <Logo variant="light" />
 
@@ -158,7 +158,7 @@ export function FooterNav() {
       </div>
 
       <div className="footer-bottom">
-        <Container>
+        <Container className="container">
           <p className="copyright">&copy; 2024. All Rights Reserved</p>
         </Container>
       </div>

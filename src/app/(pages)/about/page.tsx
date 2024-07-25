@@ -10,7 +10,7 @@ import Link from "next/link";
 export default async function Page() {
   return (
     <div className="about">
-      <Container>
+      <Container className="container">
         <figure className="about-banner">
           <Image src={about_banner_1} alt="House interior" />
           <Image
@@ -59,7 +59,10 @@ export default async function Page() {
             {`"Enimad minim veniam quis nostrud exercitation llamco laboris. Lorem
             ipsum dolor sit amet"`}
           </p>
-          <Link href="/service" className="btn">
+          <Link
+            href="/service"
+            className="before:absolute before:top-0 before:left-0 before:w-0 before:h-full before:bg-white before:transition-all before:duration-250 before:ease-in before:z-[-1] hover:bg-black focus:bg-black hover:text-[hsl(160,60%,15%)] focus:text-[hsl(160,60%,15%)] hover:border-black focus:border-black font-sans before:hover:w-full before:focus:w-full max-w-max uppercase lg:py-4 lg:px-10 md:py-3 md:px-7 md:text-base bg-[hsl(20,100%,65%)] text-white relative py-[10px] px-5 z-[1] border border-[hsl(20,100%,65%)] text-sm"
+          >
             Our Services
           </Link>
         </div>

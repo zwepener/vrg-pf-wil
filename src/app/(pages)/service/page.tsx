@@ -11,7 +11,7 @@ export default async function Page() {
   return (
     <>
       <div className="service">
-        <Container>
+        <Container className="container">
           <p className="section-subtitle">Our Services</p>
           <h2 className="h2 section-title">Our Main Focus</h2>
           <ul className="service-list">
@@ -75,7 +75,7 @@ export default async function Page() {
         </Container>
       </div>
       <div className="features">
-        <Container>
+        <Container className="container">
           <p className="section-subtitle">Our Aminities</p>
           <h2 className="h2 section-title">Building Aminities</h2>
           <ul className="features-list">

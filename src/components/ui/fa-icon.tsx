@@ -10,6 +10,6 @@ const FaIcon = ({
   icon: string;
   variant?: Variants;
   className?: string;
-}) => <i className={cn("fa-icon", "fa-" + variant, "fa-" + icon, className)} />;
+}) => <i className={cn("fa-icon", "block", "pointer-events-none", "fa-" + variant, "fa-" + icon, className)} />;
 
 export default FaIcon;
