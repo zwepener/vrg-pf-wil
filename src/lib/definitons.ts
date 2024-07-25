@@ -17,8 +17,8 @@ export const RawUserSchema = z.object({
     .max(255, "Lastname is too long (Max is 255 characters)."),
   email: z.string().email("Not a valid email.").nullable(),
   avatar_url: z.string().url().nullable(),
-  favorites: z.array(z.string()).nullable(),
-  wishlist: z.array(z.string()).nullable(),
+  favorites: z.string().array().nullable(),
+  wishlist: z.string().array().nullable(),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
@@ -50,12 +50,27 @@ export const RawPropertySchema = z.object({
   agent_id: z.string(),
   title: z.string().min(1, "Property Title is empty."),
   description: z.string().min(1, "Property Description is empty."),
+  address: z.string(),
+  bedrooms: z
+    .number()
+    .min(1, "Property cannot have less than 1 bedrooms.")
+    .max(10, "Bedroom maximum limit is 10.")
+    .refine(
+      (amount) => Number.isInteger(amount) && amount > 0,
+      "Bedroom amount must be an integer."
+    ),
+  bathrooms: z
+    .number()
+    .min(1, "Property cannot have less than 1 bathrooms.")
+    .max(8, "Bathroom maximum limit is 8.")
+    .refine(
+      (amount) => Number.isInteger(amount) && amount > 0,
+      "Bathroom amount must be an integer."
+    ),
   listing_type: z.union([z.literal("rent"), z.literal("sell")]),
   price: z.number().min(0, "Property's price cannot be less than 0."),
-  bedrooms: z.number().min(1, "Property cannot have less than 1 bedrooms."),
-  bathrooms: z.number().min(1, "Property cannot have less than 1 bathrooms."),
-  address: z.string(),
-  images: z.array(z.string().url()),
+  banner: z.string().url(),
+  images: z.string().url().array(),
   featured: z.boolean(),
   delisted: z.boolean(),
   added_at: z.coerce.date(),
@@ -71,19 +86,6 @@ export const NewPropertySchema = RawPropertySchema.pick({
   bedrooms: true,
   bathrooms: true,
   address: true,
-}).extend({
-  images: z.array(
-    z
-      .instanceof(File)
-      .refine(
-        (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),
-        "We only support image uploads."
-      )
-      .refine(
-        (file) => file.size <= 1024 * 1024 * 4.5,
-        "File is bigger than 4.5 MB."
-      )
-  ),
 });
 export type NewProperty = z.infer<typeof NewPropertySchema>;
 
