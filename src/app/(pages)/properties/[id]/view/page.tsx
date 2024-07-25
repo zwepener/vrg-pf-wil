@@ -5,15 +5,20 @@ import Image from "next/image";
 import Map from "./map";
 
 export default async function Page({ params }: { params: { id: string } }) {
+  const { id: propertyId } = params;
   const {
-    images: image_urls,
+    banner: bannerUrl,
+    images: imageUrls,
     address,
     ...property
-  } = await fetchProperty(params.id);
-  const [lat, lng] = address.split(",").map((item) => parseFloat(item));
+  } = await fetchProperty(propertyId);
 
   return (
     <>
+      <section id="banner" className="flex justify-center">
+        <Image src={bannerUrl} alt="Property Banner" width={500} height={500} />
+      </section>
+
       <section id="details">
         <ul>
           {Object.entries(property).map(([key, value]) => (
@@ -23,14 +28,12 @@ export default async function Page({ params }: { params: { id: string } }) {
       </section>
 
       <section id="images">
-        {image_urls.map((image_url, index) => (
-          <Image src={image_url} alt={`Image ${index}`} key={index} />
+        {imageUrls?.map((imageUrl, index) => (
+          <Image src={imageUrl} alt={`Image ${index}`} key={index} />
         ))}
       </section>
 
-      <section id="map">
-        <Map lat={lat} lng={lng} />
-      </section>
+      <section id="map">{/* <Map placeId={address} /> */}</section>
     </>
   );
 }

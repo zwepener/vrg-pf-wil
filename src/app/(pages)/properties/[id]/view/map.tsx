@@ -2,27 +2,36 @@
 
 import LoadingSVG from "@/components/ui/loading-svg";
 import { GoogleMap, MarkerF, useLoadScript } from "@react-google-maps/api";
+import { useState } from "react";
+import { getGeocode, getLatLng, LatLng } from "use-places-autocomplete";
 
-export default function Map({ lat, lng }: { lat: number; lng: number }) {
+export default function Map({ placeId }: { placeId: string }) {
+  const [coords, setCoords] = useState<LatLng>();
+  const [gotGeocode, setGotGeocode] = useState(false);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_SECRET as string,
-    libraries: ["places"],
   });
+
+  if (isLoaded) {
+    getGeocode({ placeId: placeId }).then((value) => {
+      setCoords(getLatLng(value[0]));
+      setGotGeocode(true);
+    });
+  }
   return (
     <>
-      {isLoaded ? (
+      {isLoaded && gotGeocode && coords ? (
         <GoogleMap
           options={{
             disableDefaultUI: true,
             clickableIcons: true,
             scrollwheel: false,
           }}
-          zoom={14}
-          center={{ lat: lat, lng: lng }}
+          center={coords}
           mapTypeId={google.maps.MapTypeId.ROADMAP}
           mapContainerStyle={{ width: "800px", height: "800px" }}
         >
-          <MarkerF position={{ lat: lat, lng: lng }} />
+          <MarkerF position={coords} />
         </GoogleMap>
       ) : (
         <>
