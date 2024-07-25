@@ -5,6 +5,7 @@ import "./globals.css";
 import "./temp_global.css";
 import { Toaster } from "@/components/ui/toast/toaster";
 import { FooterNav, TopNav } from "@/components/ui/nav/nav";
+import AuthProvider from "@/components/auth-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -26,12 +27,14 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <TopNav />
-        <main>
-          <article>{children}</article>
-        </main>
-        <FooterNav />
-        <Toaster />
+        <AuthProvider>
+          <TopNav />
+          <main>
+            <article>{children}</article>
+          </main>
+          <FooterNav />
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
