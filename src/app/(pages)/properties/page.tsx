@@ -100,7 +100,6 @@ interface CardBannerProps {
   type: "rent" | "sell";
   address: string;
   photos: number;
-  videos: number;
 }
 const CardBanner = ({ img, alt, type, address, photos }: CardBannerProps) => (
   <figure className="card-banner">
@@ -142,7 +141,6 @@ export default async function Page() {
                 type="rent"
                 address="Belmont Gardens, Chicago"
                 photos={4}
-                videos={2}
               />
               <CardContent
                 type="rent"
@@ -168,7 +166,6 @@ export default async function Page() {
                 type="sell"
                 address="Belmont Gardens, Chicago"
                 photos={4}
-                videos={2}
               />
               <CardContent
                 type="sell"
@@ -194,7 +191,6 @@ export default async function Page() {
                 type="rent"
                 address="Belmont Gardens, Chicago"
                 photos={4}
-                videos={2}
               />
               <CardContent
                 type="rent"
@@ -220,7 +216,6 @@ export default async function Page() {
                 type="sell"
                 address="Belmont Gardens, Chicago"
                 photos={4}
-                videos={2}
               />
               <CardContent
                 type="sell"
