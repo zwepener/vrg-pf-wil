@@ -61,6 +61,7 @@ const createPropertiesTable = async () => {
       bedrooms SMALLINT NOT NULL,
       bathrooms SMALLINT NOT NULL,
       address TEXT NOT NULL,
+      banner TEXT,
       images TEXT[],
       featured BOOLEAN DEFAULT false NOT NULL,
       delisted BOOLEAN DEFAULT false NOT NULL,
