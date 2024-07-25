@@ -3,6 +3,7 @@ import { Logo } from "../assets";
 import Container from "../container";
 import FaIcon from "../fa-icon";
 import NavLinks from "./nav-links";
+import ProfileMenu from "./profile-menu";
 
 export function TopNav() {
   return (
@@ -54,15 +55,7 @@ export function TopNav() {
           </nav>
 
           <div className="header-bottom-actions">
-            <button className="header-bottom-actions-btn" aria-label="Search">
-              <FaIcon icon="magnifying-glass" />
-              <span>Search</span>
-            </button>
-
-            <button className="header-bottom-actions-btn" aria-label="Profile">
-              <FaIcon variant="regular" icon="user" />
-              <span>Profile</span>
-            </button>
+            <ProfileMenu />
 
             <button
               className="header-bottom-actions-btn"
