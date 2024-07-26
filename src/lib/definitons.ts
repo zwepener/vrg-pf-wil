@@ -69,7 +69,7 @@ export const RawPropertySchema = z.object({
     ),
   listing_type: z.union([z.literal("rent"), z.literal("sell")]),
   price: z.number().min(0, "Property's price cannot be less than 0."),
-  banner: z.string().url(),
+  banner_url: z.string().url(),
   images: z.string().url().array(),
   featured: z.boolean(),
   delisted: z.boolean(),
@@ -100,7 +100,7 @@ export type EditablePropertyProperties = z.infer<
 >;
 
 export const AddPropertyAPISchema = NewPropertySchema.extend({
-  banner: z
+  banner_img: z
     .instanceof(File)
     .refine(
       (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),

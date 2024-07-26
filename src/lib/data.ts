@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import type { RawProperty, RawUser } from "./definitons";
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore } from "next/cache";
 
 /**
  * Fetches user information from the database.
@@ -68,25 +68,29 @@ export async function fetchProperty(propertyId: string): Promise<RawProperty> {
   }
 }
 
-/**
- * Fetches properties from the database.
- *
- * @param agentId - (Optional) The unique identifier of the agent. If provided, fetches properties managed by that agent.
- * @returns A Promise that resolves with an array of RawProperty objects, or rejects with an error.
- * @throws Error if fetching properties fails.
- */
 export async function fetchProperties(
-  agentId?: string
+  includeDelisted?: boolean
 ): Promise<RawProperty[]> {
   try {
     const result = await sql<RawProperty>`
       SELECT *
-      FROM properties${
-        agentId
-          ? `
-      WHERE agent_id = ${agentId}`
-          : ""
-      };
+      FROM properties${includeDelisted ? "" : " WHERE delisted = false"};
+    `;
+    return result.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch properties.");
+  }
+}
+
+export async function fetchPropertiesByAgent(
+  agentId: string
+): Promise<RawProperty[]> {
+  try {
+    const result = await sql<RawProperty>`
+      SELECT *
+      FROM properties
+      WHERE agent_id = ${agentId};
     `;
     return result.rows;
   } catch (error) {

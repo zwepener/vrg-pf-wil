@@ -124,7 +124,7 @@ export async function updatePropertyBanner(
     await sql`
       UPDATE properties
       SET
-        banner = ${bannerUrl},
+        banner_url = ${bannerUrl},
         updated_at = CURRENT_TIMESTAMP
       WHERE id = ${propertyId};
     `;

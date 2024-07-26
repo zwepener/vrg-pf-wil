@@ -29,7 +29,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     bedrooms: parseInt(formData.get("bedrooms") as string),
     bathrooms: parseInt(formData.get("bathrooms") as string),
     address: formData.get("address"),
-    banner: formData.get("banner"),
+    banner_img: formData.get("banner_img"),
   });
   if (!success) {
     return status400({
@@ -39,15 +39,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
   }
   try {
-    const { banner, ...payload } = parsedFormData;
+    const { banner_img, ...payload } = parsedFormData;
     const propertyId = await insertPropertyGetId({
       ...payload,
       agent_id: userId,
     });
-    const filePath = `properties/${propertyId}/banner.${banner.name
+    const filePath = `properties/${propertyId}/banner.${banner_img.name
       .split(".")
       .pop()}`;
-    const { url: bannerUrl } = await put(filePath, banner, {
+    const { url: bannerUrl } = await put(filePath, banner_img, {
       access: "public",
       addRandomSuffix: false,
     });

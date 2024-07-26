@@ -7,7 +7,7 @@ import Map from "./map";
 export default async function Page({ params }: { params: { id: string } }) {
   const { id: propertyId } = params;
   const {
-    banner: bannerUrl,
+    banner_url: bannerUrl,
     images: imageUrls,
     address,
     ...property

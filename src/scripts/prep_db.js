@@ -1,10 +1,12 @@
+require("dotenv").config();
+
 const { sql } = require("@vercel/postgres");
 
 const createIdGenerator = async () => {
   await sql`
     CREATE FUNCTION generate_unique_id(machine_id INT) RETURNS TEXT AS $$
     DECLARE
-      epoch BIGINT := 1609459200000;
+      epoch BIGINT := 1609459200000; -- 1 Jan 2021 2AM GMT+02:00
       current_millis BIGINT;
       sequence_id INT;
       last_timestamp BIGINT := 0;
@@ -13,7 +15,7 @@ const createIdGenerator = async () => {
     BEGIN
       current_millis := (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT;
       IF current_millis = last_timestamp THEN
-        sequence := (sequence + 1) & 4095;
+        sequence := (sequence + 1) & 4095; -- 12 bits
         IF sequence = 0 THEN
           WHILE current_millis <= last_timestamp LOOP
             current_millis := (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT;
@@ -61,7 +63,7 @@ const createPropertiesTable = async () => {
       bedrooms SMALLINT NOT NULL,
       bathrooms SMALLINT NOT NULL,
       address TEXT NOT NULL,
-      banner TEXT,
+      banner_url TEXT,
       images TEXT[],
       featured BOOLEAN DEFAULT false NOT NULL,
       delisted BOOLEAN DEFAULT false NOT NULL,

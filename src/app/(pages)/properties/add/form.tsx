@@ -34,7 +34,7 @@ import { z } from "zod";
 import AutoCompleteInput from "./auto-complete";
 
 const formSchema = NewPropertySchema.extend({
-  banner: z
+  banner_img: z
     .instanceof(FileList)
     .refine((file) => file.length > 0, "No file selected.")
     .refine((file) => file.length == 1, "Only one file may be selected.")
@@ -66,17 +66,17 @@ export default function AddForm() {
       title: "",
       description: "",
       price: 0,
-      banner: undefined,
+      banner_img: undefined,
     },
   });
 
-  const bannerRef = form.register("banner");
+  const bannerRef = form.register("banner_img");
 
-  async function onSubmit({ banner, ...values }: FormType) {
+  async function onSubmit({ banner_img, ...values }: FormType) {
     const formData = new FormData();
     const requestData: AddPropertyAPI & { [key: string]: any } = {
       ...values,
-      banner: banner[0],
+      banner_img: banner_img[0],
     };
     for (let field in requestData) formData.append(field, requestData[field]);
     try {
@@ -273,7 +273,7 @@ export default function AddForm() {
             />
             <FormField
               control={form.control}
-              name="banner"
+              name="banner_img"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Banner</FormLabel>
