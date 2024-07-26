@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Estate</title>
+    <link rel="stylesheet" href="styles.css">
+	<style>
+	/* Reset default styling */
+body, h1, h2, h3, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Base styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styling */
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header nav img {
+    margin-right: 20px;
+}
+
+header nav h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main content styling */
+main {
+    padding: 20px;
+}
+
+.main-heading {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Property grid styling */
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.property-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+}
+
+.property-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #eee;
+}
+
+.property-card h3 {
+    font-size: 1.4em;
+    margin: 10px 0;
+}
+
+.property-card p {
+    margin: 5px 0;
+}
+
+.property-card .price {
+    font-weight: bold;
+    color: #e44d26;
+    margin: 10px 0;
+}
+
+.property-card .button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.property-card .button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer styling */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+</style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="lg.png" alt="IT Estate Logo" width="150px" height="120px">
+            <h1>IT Estate</h1>
+            <ul>
+               
+                <li><a href="sign up form.html">Sign up/Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2 class="main-heading">Properties Currently Available for Sale</h2>
+        <div class="property-grid">
+            <div class="property-card">
+                <img src="img/property-1.jpg" alt="White And Blue Villa">
+                <h3>White And Blue Villa</h3>
+                <p>4-Bedrooms, 2-Halls, 1-Kitchen</p>
+                <p>123-Street, Durban, RSA</p>
+                <p class="price">R2 180,000</p>
+                <button class="button">Buy Now</button>
+            </div>
+            <div class="property-card">
+                <img src="img/property-2.jpg" alt="Craftsman House Villa">
+                <h3>Craftsman House Villa</h3>
+                <p>3-Bedrooms, 2-Halls, 1-Kitchen, Pool</p>
+                <p>3-7, Durban, Ethekwini, Umlazi, RSA</p>
+                <p class="price">R2 250,000</p>
+                <button class="button">Buy Now</button>
+            </div>
+            <div class="property-card">
+                <img src="img/property-3.jpg" alt="Sleek House">
+                <h3>Sleek House</h3>
+                <p>4-Bedrooms, 1-Hall, 1-Kitchen, Pool</p>
+                <p>5-2, Hutton Drive, Cape Town, Camps Bay, RSA</p>
+                <p class="price">R2 200,000</p>
+                <button class="button">Buy Now</button>
+            </div>
+			<div class="property-card">
+                <img class="img" src="img/property-4.jpg">
+                <H2>Encino Ave House</H2>
+                <P>4-Bedroom,2-Hall,1-Kitchen</P>
+                <p>3-1, Encivo, Pretoria, RSA</p>
+                <P>For-Sale:R3 325,000</P>
+                <button class="button">Buy Now</button>
+            </div>
+            <div class="property-card">
+                <img class="img" src="img/property-5.jpg">
+                <H2>Crystal Blue Villa</H2>
+                <P>3-Bedroom,2-Hall,1-Kitchen,Pool</P>
+                <p>2-5, Mount Olympus, Polokwane, RSA</p>
+                <P>For-Sale:R 3 350,000</P>
+                <button class="button">Buy Now</button>
+            </div>
+            <div class="property-card">
+                <img class="img" src="img/property-6.jpg">
+                <H3>Cabana Villa</H3>
+                <P>3-Bedroom,1-Hall,1-Kitchen,Pool</P>
+                <p>Devlin Drive, Centurion, RSA</p>
+                <P>For-Sale:$300,000</P>
+                <button class="button">Buy Now</button>
+            </div>
+        </div>
+       <div class="property-card">
+            <div class="box">
+                <img class="img" src="img/property-7.jpg">
+                <H3>Beverly Hills, Luxury Villa</H3>
+                <P>3-Bedrooms,1-Hall,1-Kitchen,Pool</P>
+                <p>1-7, Sandton, RSA</p>
+                <P>For-Sale:R 4 375,000</P>
+                <button class="button">Buy Now</button>
+            </div>
+           <div class="property-card">
+                <img class="img" src="img/property-8.jpg">
+                <H3>Cordillera Sun House</H3>
+                <P>4-Bedroom,1-Hall,1-Kitchen</P>
+                <p>4-2,Johannesburg, Khayalami, RSA</p>
+                <P>For-Sale:R5 350,000</P>
+                <button class="button">Buy Now</button>
+            </div>
+            <div class="property-card">
+                <img class="img" src="img/property-9.jpg">
+                <H3>Hillside Karlie Villa</H3>
+                <P>4-Bedrooms,2-Halls,1-Kitchen</P>
+                <p>2-8, Port Elizabeth, RSA</p>
+                <P>For-Sale:R5 520,000</P>
+                <button class="button">Buy Now</button>
+            </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 IT Estate. All rights reserved.</p>
+    </footer>
+</body>
+</html>
