@@ -1,6 +1,5 @@
 "use server";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -8,9 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Suspense } from "react";
 import LoginForm from "./login-form";
 import RegisterForm from "./register-form";
-import { Suspense } from "react";
 
 export default async function AuthForm() {
   return (

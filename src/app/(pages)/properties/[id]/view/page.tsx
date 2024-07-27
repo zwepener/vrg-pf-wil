@@ -2,7 +2,6 @@
 
 import { fetchProperty } from "@/lib/data";
 import Image from "next/image";
-import Map from "./map";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id: propertyId } = params;

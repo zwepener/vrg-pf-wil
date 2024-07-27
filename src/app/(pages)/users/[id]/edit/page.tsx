@@ -2,7 +2,7 @@
 
 import { fetchUserById } from "@/lib/data";
 
-{/* <Carousel className="w-full max-w-xs">
+/* <Carousel className="w-full max-w-xs">
   <CarouselContent>
     {imageURLs.map((imageURL, index) => (
       <CarouselItem key={index}>
@@ -23,7 +23,7 @@ import { fetchUserById } from "@/lib/data";
   </CarouselContent>
   <CarouselPrevious />
   <CarouselNext />
-</Carousel>; */}
+</Carousel>; */
 
 /* onChange={(event) => {
   const images = event.target.files;

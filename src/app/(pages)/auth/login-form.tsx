@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import FaIcon from "@/components/ui/fa-icon";
 import {
   Form,
   FormControl,
@@ -19,7 +20,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FaIcon from "@/components/ui/fa-icon";
 
 const formScheam = RawUserSchema.pick({
   username: true,

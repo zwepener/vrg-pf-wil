@@ -1,13 +1,11 @@
 require("dotenv").config();
 
-const bcrypt = require("bcrypt");
-
 module.exports = {
   users: [
     {
       id: "0",
       username: "admin",
-      password: bcrypt.hash(process.env.DEFAULT_ADMIN_PASS, 10),
+      password: process.env.DEFAULT_ADMIN_PASS,
       firstname: "Admin",
       lastname: "Default",
       email: "realhome@gmail.com",
@@ -19,7 +17,7 @@ module.exports = {
     {
       id: "1",
       username: "agent",
-      password: bcrypt.hash(process.env.DEFAULT_AGENT_PASS, 10),
+      password: process.env.DEFAULT_AGENT_PASS,
       firstname: "Agent",
       lastname: "Default",
       email: null,
@@ -31,7 +29,7 @@ module.exports = {
     {
       id: "2",
       username: "user",
-      password: bcrypt.hash(process.env.DEFAULT_USER_PASS, 10),
+      password: process.env.DEFAULT_USER_PASS,
       firstname: "User",
       lastname: "Default",
       email: null,
@@ -94,7 +92,7 @@ module.exports = {
       delisted: false,
     },
     {
-      id: "2",
+      id: "3",
       agent_id: "1",
       title: "Luxury Villa",
       description:

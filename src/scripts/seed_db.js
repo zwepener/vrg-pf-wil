@@ -1,12 +1,13 @@
 require("dotenv").config();
 
 const { sql } = require("@vercel/postgres");
-const { users, properties } = require("../lib/placeholder_data");
+const { users, properties } = require("../lib/default_data");
+const { hashSync } = require("bcrypt");
 
 const seedUsersTable = async () => {
   return Promise.all(
     users.map(
-      ({
+      async ({
         id,
         username,
         password,
@@ -18,21 +19,22 @@ const seedUsersTable = async () => {
         wishlist,
         role,
       }) => {
+        const hashedPsw = hashSync(password, 10);
         return sql`
           INSERT INTO users (id, username, password, firstname, lastname, email, avatar_url, favorites, wishlist, role)
-          VALUES (${id}, ${username}, ${password}, ${firstname}, ${lastname}, ${email}, ${avatar_url}, ${favorites}, ${wishlist}, ${role})
+          VALUES (${id}, ${username}, ${hashedPsw}, ${firstname}, ${lastname}, ${email}, ${avatar_url}, ${favorites}, ${wishlist}, ${role})
           ON CONFLICT (id) DO
           UPDATE
           SET
             username = ${username},
-            password = ${password},
+            password = ${hashedPsw},
             firstname = ${firstname},
             lastname = ${lastname},
             email = ${email},
             avatar_url = ${avatar_url},
             favorites = ${favorites},
             wishlist = ${wishlist},
-            role = ${role}
+            role = ${role},
             updated_at = CURRENT_TIMESTAMP;
         `;
       }
@@ -86,17 +88,17 @@ const seedPropertiesTable = async () => {
 (async () => {
   await seedUsersTable()
     .then(({ length }) => {
-      console.log(`Seeded ${length} users.`);
+      console.log(`✅ Seeded ${length} users.`);
     })
     .catch((reason) => {
-      console.error("Could not seed 'users' table:\n", reason);
+      console.error("❌ Could not seed 'users' table:\n", reason);
     });
 
   await seedPropertiesTable()
     .then(({ length }) => {
-      console.log(`Seeded ${length} properties.`);
+      console.log(`✅ Seeded ${length} properties.`);
     })
     .catch((reason) => {
-      console.error("Could not seed 'properties' table:\n", reason);
+      console.error("❌ Could not seed 'properties' table:\n", reason);
     });
 })();
