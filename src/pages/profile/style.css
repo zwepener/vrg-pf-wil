@@ -1,0 +1,51 @@
+a:hover {
+  text-shadow: 2px 2px 8px red;
+}
+div {
+  display: flex;
+}
+#AviralVed {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+#Designation {
+  font-size: 20px;
+  text-align: center;
+}
+#ins {
+  font-size: 10px;
+}
+a {
+  font-size: 20px;
+  color: black;
+}
+#Aaradhaya {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+body {
+  background-image: url(https://thumbs.dreamstime.com/2f40f6fd0d49b16f3594e310ef475fec.jpg);
+}
+#VARSHNEY {
+  border: solid;
+  border-radius: 50%;
+}
+#Dey {
+  border: solid;
+  border-radius: 50%;
+}
+#Anurag {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+#Pandey {
+  border: solid;
+  border-radius: 50%;
+}
+h1 {
+  text-align: center;
+  background-color: aqua;
+}
