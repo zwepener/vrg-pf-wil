@@ -28,8 +28,9 @@ const formSchema = NewUserSchema.extend({
 type RegisterUser = z.infer<typeof formSchema>;
 
 export default function RegisterForm() {
-  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterUser>({
     resolver: zodResolver(formSchema),
@@ -79,16 +80,13 @@ export default function RegisterForm() {
     } finally {
       setIsLoading(false);
     }
-    return toast({
+    form.reset();
+    toast({
       title: "Account Created",
       description:
         "Your new account was successfully created. You may now proceed to log in.",
     });
   }
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) form.reset();
-  }, [form.formState.isSubmitSuccessful, form]);
 
   return (
     <Form {...form}>

@@ -37,6 +37,16 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
+  useEffect(() => {
+    if (callbackUrl) {
+      toast({
+        title: "Login Required",
+        description:
+          "You need to be logged in to access the requested content.",
+      });
+    }
+  }, []);
+
   const form = useForm<LoginUser>({
     resolver: zodResolver(formScheam),
     defaultValues: {
@@ -79,19 +89,14 @@ export default function LoginForm() {
     } finally {
       setIsLoading(false);
     }
-    return toast({
+    toast({
       title: "Login Successfull",
       description: callbackUrl
         ? "Redirecting you back to your requested content."
         : "Redirecting you to the Home Page.",
     });
+    router.push(callbackUrl ?? "/");
   }
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      router.push("/");
-    }
-  }, [form.formState.isSubmitSuccessful, router, callbackUrl]);
 
   return (
     <Form {...form}>
