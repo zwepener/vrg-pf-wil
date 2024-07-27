@@ -50,6 +50,7 @@ export default function ProfileMenu() {
             </DropdownMenuItem>
           )}
           <DropdownMenuItem
+            disabled={true}
             onClick={() => router.push("/settings")}
             className="cursor-pointer space-x-2"
           >
