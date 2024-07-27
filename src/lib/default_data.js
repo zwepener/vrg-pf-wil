@@ -8,7 +8,7 @@ module.exports = {
       password: process.env.DEFAULT_ADMIN_PASS,
       firstname: "Admin",
       lastname: "Default",
-      email: "realhome@gmail.com",
+      email: "vrg.realhome@gmail.com",
       avatar_url: null,
       favorites: null,
       wishlist: null,

@@ -15,11 +15,11 @@ export function TopNav() {
           <ul className="header-top-list">
             <li>
               <a
-                href="MailIconto:realhome@gmail.com"
+                href="MailIconto:vrg.realhome@gmail.com"
                 className="header-top-link"
               >
                 <FaIcon icon="envelope" />
-                <span>realhome@gmail.com</span>
+                <span>vrg.realhome@gmail.com</span>
               </a>
             </li>
           </ul>
@@ -87,9 +87,9 @@ export function FooterNav() {
 
             <ul className="contact-list">
               <li>
-                <a href="mailto:realhome@gmail.com" className="contact-link">
+                <a href="mailto:vrg.realhome@gmail.com" className="contact-link">
                   <FaIcon icon="envelope" />
-                  <span>realhome@gmail.com</span>
+                  <span>vrg.realhome@gmail.com</span>
                 </a>
               </li>
             </ul>
