@@ -13,7 +13,7 @@ export default async function Page() {
       <Container className="container">
         <p className="section-subtitle">Properties</p>
         <h2 className="h2 section-title">Featured Listings</h2>
-        <Featured properties={featured} />
+        {featured && <Featured properties={featured} />}
         <Separator />
       </Container>
     </div>
