@@ -2,8 +2,12 @@
 
 import { fetchUserById } from "@/lib/data";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const user = await fetchUserById(params.id);
+export default async function Page({
+  params: { id: userId },
+}: {
+  params: { id: string };
+}) {
+  const { password, ...user } = await fetchUserById(userId);
   return (
     <ul>
       {Object.entries(user).map(([key, value]) => (
