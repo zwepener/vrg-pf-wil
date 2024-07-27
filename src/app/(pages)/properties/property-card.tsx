@@ -1,18 +1,18 @@
 "use server";
 
 import PropertyBanner from "@/assets/images/property-banner.png";
+import UserAvatar from "@/assets/images/user-avatar.png";
 import FaIcon from "@/components/ui/fa-icon";
 import { fetchUserById } from "@/lib/data";
 import type { RawProperty } from "@/lib/definitons";
 import Image from "next/image";
 import Link from "next/link";
-import UserAvatar from "@/assets/images/user-avatar.png"
 
 interface PropertyCardProps {
-  payload: RawProperty;
+  property: RawProperty;
 }
 export default async function PropertyCard({
-  payload: {
+  property: {
     id: propertyId,
     agent_id,
     banner_url,
@@ -44,39 +44,45 @@ export default async function PropertyCard({
           />
         </Link>
         <div
-          className={`card-badge ${
+          className={`card-badge select-none ${
             listing_type === "rent" ? "green" : "orange"
           }`}
         >
           {listing_type === "rent" ? "To Let" : "For Sale"}
         </div>
         <div className="banner-actions">
-          <button className="banner-actions-btn">
+          <Link
+            href={`/properties/${propertyId}/view#map`}
+            className="banner-actions-btn"
+          >
             <FaIcon icon="location-dot" />
             <address>N / A</address>
-          </button>
-          <button className="banner-actions-btn">
+          </Link>
+          <Link
+            href={`/properties/${propertyId}/view#images`}
+            className="banner-actions-btn"
+          >
             <FaIcon icon="camera" />
             <span>{images?.length ?? 0}</span>
-          </button>
+          </Link>
         </div>
       </figure>
       <div className="card-content">
-        <div className="card-price">
+        <div className="card-price select-none">
           <strong>{`R${price}`}</strong>
           {listing_type === "rent" ? " / Month" : ""}
         </div>
-        <h3 className="h3 card-title">
+        <h3 className="h3 card-title select-none">
           <Link href={`/properties/${propertyId}/view`}>{title}</Link>
         </h3>
-        <p className="card-text">{description}</p>
+        <p className="card-text select-none">{description}</p>
         <ul className="card-list">
-          <li className="card-item">
+          <li className="card-item select-none">
             <strong>{bedrooms}</strong>
             <FaIcon icon="bed" />
             <span>Bedrooms</span>
           </li>
-          <li className="card-item">
+          <li className="card-item select-none">
             <strong>{bathrooms}</strong>
             <FaIcon icon="person" />
             <span>Bathrooms</span>
@@ -86,7 +92,11 @@ export default async function PropertyCard({
       <div className="card-footer">
         <div className="card-author">
           <figure className="author-avatar">
-            <Image src={avatar_url ?? UserAvatar} alt={"User"} className="w-100" />
+            <Image
+              src={avatar_url ?? UserAvatar}
+              alt={"User"}
+              className="w-100"
+            />
           </figure>
           <div>
             <p className="author-name">
@@ -94,19 +104,8 @@ export default async function PropertyCard({
                 {`${firstname} ${lastname}`}
               </Link>
             </p>
-            <p className="author-title">{role}</p>
+            <p className="author-title select-none">{role}</p>
           </div>
-        </div>
-        <div className="card-footer-actions">
-          <button className="card-footer-actions-btn">
-            <FaIcon icon="up-right-and-down-left-from-center" />
-          </button>
-          <button className="card-footer-actions-btn">
-            <FaIcon icon="heart" />
-          </button>
-          <button className="card-footer-actions-btn">
-            <FaIcon icon="circle-plus" />
-          </button>
         </div>
       </div>
     </div>

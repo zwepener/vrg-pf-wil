@@ -2,7 +2,8 @@
 
 import Container from "@/components/ui/container";
 import { fetchProperties } from "@/lib/data";
-import PropertyCard from "./property-card";
+import Featured from "./featured";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Page() {
   const properties = await fetchProperties();
@@ -12,13 +13,8 @@ export default async function Page() {
       <Container className="container">
         <p className="section-subtitle">Properties</p>
         <h2 className="h2 section-title">Featured Listings</h2>
-        <ul className="property-list has-scrollbar">
-          {featured.map((property) => (
-            <li key={property.id}>
-              <PropertyCard payload={property} />
-            </li>
-          ))}
-        </ul>
+        <Featured properties={featured} />
+        <Separator />
       </Container>
     </div>
   );
