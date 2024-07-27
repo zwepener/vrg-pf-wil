@@ -1,5 +1,6 @@
 "use server";
 
+import PropertyBanner from "@/assets/images/property-banner.png";
 import { fetchProperty } from "@/lib/data";
 import Image from "next/image";
 
@@ -15,7 +16,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <section id="banner" className="flex justify-center">
-        <Image src={bannerUrl} alt="Property Banner" width={500} height={500} />
+        <Image
+          src={bannerUrl ?? PropertyBanner}
+          alt="Property Banner"
+          width={500}
+          height={500}
+        />
       </section>
 
       <section id="details">
