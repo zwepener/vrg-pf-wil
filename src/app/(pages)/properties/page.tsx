@@ -14,7 +14,7 @@ export default async function Page() {
         <p className="section-subtitle">Properties</p>
         <h2 className="h2 section-title">Featured Listings</h2>
         {featured && <Featured properties={featured} />}
-        <Separator />
+        <Separator className="my-5"/>
       </Container>
     </div>
   );

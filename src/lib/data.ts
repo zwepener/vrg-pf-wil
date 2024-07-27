@@ -71,6 +71,7 @@ export async function fetchProperty(propertyId: string): Promise<RawProperty> {
 export async function fetchProperties(
   includeDelisted?: boolean
 ): Promise<RawProperty[]> {
+  noStore();
   try {
     const result = includeDelisted
       ? await sql<RawProperty>`SELECT * FROM properties;`
@@ -85,6 +86,7 @@ export async function fetchProperties(
 export async function fetchPropertiesByAgent(
   agentId: string
 ): Promise<RawProperty[]> {
+  noStore();
   try {
     const result = await sql<RawProperty>`
       SELECT *

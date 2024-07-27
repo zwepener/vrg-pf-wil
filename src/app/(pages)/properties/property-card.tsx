@@ -14,6 +14,7 @@ interface PropertyCardProps {
 export default async function PropertyCard({
   property: {
     id: propertyId,
+    address,
     agent_id,
     banner_url,
     listing_type,
@@ -56,7 +57,7 @@ export default async function PropertyCard({
             className="banner-actions-btn"
           >
             <FaIcon icon="location-dot" />
-            <address>N / A</address>
+            <address>{address}</address>
           </Link>
           <Link
             href={`/properties/${propertyId}/view#images`}

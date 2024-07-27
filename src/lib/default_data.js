@@ -50,8 +50,7 @@ module.exports = {
       price: 638000,
       bedrooms: 3,
       bathrooms: 2,
-      google_place_id:
-        "EjAzMDEgWmlnemFnIFRyYWlsIFBhdGgsIEJldHR5J3MgQmF5LCBTb3V0aCBBZnJpY2EiLiosChQKEgljvUdSx9bNHREkGR9JmaYY-hIUChIJL_HfyKPWzR0RoBg0oJi6AEM",
+      address: "Gleemoor Rd, Gleemoor, Cape Town, 7764, South Africa",
       banner_url: null,
       images: null,
       featured: true,
@@ -67,8 +66,7 @@ module.exports = {
       price: 638000,
       bedrooms: 3,
       bathrooms: 2,
-      google_place_id:
-        "EjMyMTIyIEdsZWVtb29yIFJkLCBHbGVlbW9vciwgQ2FwZSBUb3duLCBTb3V0aCBBZnJpY2EiLiosChQKEglxaPgTrVzMHRFVr1FN7W1yAxIUChIJnyhiOa1czB0RNX-1PrKkn6Q",
+      address: "14267 Simanga St, Bloekombos, Cape Town, 7570, South Africa",
       banner_url: null,
       images: null,
       featured: true,
@@ -84,8 +82,8 @@ module.exports = {
       price: 638000,
       bedrooms: 3,
       bathrooms: 2,
-      google_place_id:
-        "EjsxMjM0IEphY2FyYW5kYSBBdmVudWUsIEdyYXNzeSBQYXJrLCBDYXBlIFRvd24sIFNvdXRoIEFmcmljYSIuKiwKFAoSCRFtBJ7fQ8wdEeWKU5xQIC8jEhQKEgnVoqOAU0HMHRE3qM0qwmVWBA",
+      address:
+        "140 Bree St, Cape Town City Centre, Cape Town, 8000, South Africa",
       banner_url: null,
       images: null,
       featured: true,
@@ -101,8 +99,7 @@ module.exports = {
       price: 638000,
       bedrooms: 3,
       bathrooms: 2,
-      google_place_id:
-        "Ejo1Njc4IFByb3RlYSBTdHJlZXQsIENoYXBtYW5zIFBlYWssIENhcGUgVG93biwgU291dGggQWZyaWNhIi4qLAoUChIJ9waeJb9rzB0RNdf_glcJlf4SFAoSCeXBrfu5a8wdEe6klS9ELMiF",
+      address: "2451 Duxbury Rd, Bergvliet, Cape Town, 7945, South Africa",
       banner_url: null,
       images: null,
       featured: true,

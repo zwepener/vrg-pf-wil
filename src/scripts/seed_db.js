@@ -54,7 +54,7 @@ const seedPropertiesTable = async () => {
         price,
         bedrooms,
         bathrooms,
-        google_place_id,
+        address,
         banner_url,
         images,
         featured,
@@ -62,7 +62,7 @@ const seedPropertiesTable = async () => {
       }) => {
         return sql`
           INSERT INTO properties (id, agent_id, title, description, listing_type, price, bedrooms, bathrooms, address, banner_url, images, featured, delisted)
-          VALUES (${id}, ${agent_id}, ${title}, ${description}, ${listing_type}, ${price}, ${bedrooms}, ${bathrooms}, ${google_place_id}, ${banner_url}, ${images}, ${featured}, ${delisted})
+          VALUES (${id}, ${agent_id}, ${title}, ${description}, ${listing_type}, ${price}, ${bedrooms}, ${bathrooms}, ${address}, ${banner_url}, ${images}, ${featured}, ${delisted})
           ON CONFLICT (id) DO
           UPDATE
           SET
@@ -73,7 +73,7 @@ const seedPropertiesTable = async () => {
             price = ${price},
             bedrooms = ${bedrooms},
             bathrooms = ${bathrooms},
-            address = ${google_place_id},
+            address = ${address},
             banner_url = ${banner_url},
             images = ${images},
             featured = ${featured},
