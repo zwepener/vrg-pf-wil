@@ -72,10 +72,9 @@ export async function fetchProperties(
   includeDelisted?: boolean
 ): Promise<RawProperty[]> {
   try {
-    const result = await sql<RawProperty>`
-      SELECT *
-      FROM properties${includeDelisted ? "" : " WHERE delisted = false"};
-    `;
+    const result = includeDelisted
+      ? await sql<RawProperty>`SELECT * FROM properties;`
+      : await sql<RawProperty>`SELECT * FROM properties WHERE delisted = false;`;
     return result.rows;
   } catch (error) {
     console.error("Database Error:", error);
