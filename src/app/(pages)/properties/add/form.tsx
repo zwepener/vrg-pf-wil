@@ -1,5 +1,6 @@
 "use client";
 
+import PropertyBanner from "@/assets/images/property-banner.png";
 import { Button } from "@/components/ui/button";
 import FaIcon from "@/components/ui/fa-icon";
 import {
@@ -48,9 +49,7 @@ export type FormType = z.infer<typeof formSchema>;
 
 export default function AddForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [previewImageURL, setPreviewImageURL] = useState<string>(
-    "https://static.vecteezy.com/system/resources/previews/000/378/951/original/home-vector-icon.jpg"
-  );
+  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_SECRET as string,
@@ -285,16 +284,12 @@ export default function AddForm() {
                       onChange={(event) => {
                         field.onChange(event.target?.files?.[0] ?? undefined);
                         if (!event.target.files || !event.target.files[0]) {
-                          return setPreviewImageURL(
-                            "https://static.vecteezy.com/system/resources/previews/000/378/951/original/home-vector-icon.jpg"
-                          );
+                          return setPreviewImageURL(null);
                         }
                         const reader = new FileReader();
                         reader.onload = (ev: ProgressEvent<FileReader>) => {
                           if (!ev.target || !ev.target.result) {
-                            setPreviewImageURL(
-                              "https://static.vecteezy.com/system/resources/previews/000/378/951/original/home-vector-icon.jpg"
-                            );
+                            setPreviewImageURL(null);
                           } else {
                             setPreviewImageURL(ev.target.result as string);
                           }
@@ -304,7 +299,7 @@ export default function AddForm() {
                     />
                   </FormControl>
                   <Image
-                    src={previewImageURL}
+                    src={previewImageURL ?? PropertyBanner}
                     alt="Image Preview"
                     width={300}
                     height={300}
