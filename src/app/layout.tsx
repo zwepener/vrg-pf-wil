@@ -10,6 +10,9 @@ import "./temp_global.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.svg",
+  },
   title: "Realhome",
   description: "A Real Estate Listing Platform",
 };
