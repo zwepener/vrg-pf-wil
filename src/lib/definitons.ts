@@ -36,14 +36,12 @@ export const NewUserSchema = RawUserSchema.pick({
 });
 export type NewUser = z.infer<typeof NewUserSchema>;
 
-const EditableUserPropertiesSchema = RawUserSchema.omit({
+export const EditableUserSchema = RawUserSchema.omit({
   id: true,
   created_at: true,
   updated_at: true,
 });
-export type EditableUserProperties = z.infer<
-  typeof EditableUserPropertiesSchema
->;
+export type EditableUser = z.infer<typeof EditableUserSchema>;
 
 export const RawPropertySchema = z.object({
   id: z.string(),
@@ -89,15 +87,21 @@ export const NewPropertySchema = RawPropertySchema.pick({
 });
 export type NewProperty = z.infer<typeof NewPropertySchema>;
 
-const EditablePropertyPropertiesSchema = RawPropertySchema.omit({
-  id: true,
+export const EditablePropertySchema = RawPropertySchema.pick({
+  agent_id: true,
+  title: true,
+  description: true,
+  listing_type: true,
+  price: true,
+  bedrooms: true,
+  bathrooms: true,
+  address: true,
+  banner_url: true,
   images: true,
-  added_at: true,
-  updated_at: true,
+  featured: true,
+  delisted: true,
 });
-export type EditablePropertyProperties = z.infer<
-  typeof EditablePropertyPropertiesSchema
->;
+export type EditableProperty = z.infer<typeof EditablePropertySchema>;
 
 export const AddPropertyAPISchema = NewPropertySchema.extend({
   banner_img: z
