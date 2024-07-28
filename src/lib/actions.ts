@@ -1,7 +1,7 @@
 import { sql } from "@vercel/postgres";
 import type {
-  EditableUserProperties,
-  EditablePropertyProperties,
+  EditableUser,
+  EditableProperty,
   NewUser,
   NewProperty,
   RawProperty,
@@ -31,10 +31,10 @@ export async function insertUser(payload: NewUser): Promise<void> {
  * @param newValue - The new value for the specified property.
  * @throws Error if the update fails.
  */
-export async function updateUserProp<K extends keyof EditableUserProperties>(
+export async function updateUserProp<K extends keyof EditableUser>(
   userId: string,
   property: K,
-  newValue: EditableUserProperties[K]
+  newValue: EditableUser[K]
 ): Promise<void> {
   let value: any = newValue;
   switch (property) {
@@ -73,10 +73,10 @@ export async function updateUserProp<K extends keyof EditableUserProperties>(
  */
 export async function updateUser(
   userId: string,
-  payload: EditableUserProperties
+  payload: EditableUser
 ): Promise<void> {
   try {
-    const keys = Object.keys(payload) as (keyof EditableUserProperties)[];
+    const keys = Object.keys(payload) as (keyof EditableUser)[];
     await sql`
       UPDATE users
       SET
@@ -143,10 +143,10 @@ export async function updatePropertyBanner(
  */
 export async function updateProperty(
   propertyId: string,
-  payload: EditablePropertyProperties
+  payload: EditableProperty
 ): Promise<void> {
   try {
-    const keys = Object.keys(payload) as (keyof EditablePropertyProperties)[];
+    const keys = Object.keys(payload) as (keyof EditableProperty)[];
     await sql`
       UPDATE properties
       SET
