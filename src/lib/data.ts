@@ -1,21 +1,45 @@
 import { sql } from "@vercel/postgres";
 import type { RawProperty, RawUser } from "./definitons";
-import { isUUID } from "./utils";
+import { unstable_noStore as noStore } from "next/cache";
 
 /**
  * Fetches user information from the database.
  *
- * @param arg - The user ID or username.
+ * @param userId - The user ID.
  * @returns A Promise that resolves with the RawUser object, or rejects with an error.
  * @throws Error if fetching user data fails.
  */
-export async function fetchUser(arg: string): Promise<RawUser> {
-  const query = `SELECT * users WHERE ${
-    isUUID(arg) ? "id" : "username"
-  } = ${arg};`;
+export async function fetchUserById(userId: string): Promise<RawUser> {
+  noStore();
   try {
-    const result = await sql<RawUser>`${query}`;
-    return result.rows[0];
+    const { rows } = await sql<RawUser>`
+      SELECT *
+      FROM users
+      WHERE id = ${userId};
+    `;
+    return rows[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
+
+/**
+ * Fetches user information from the database.
+ *
+ * @param username - The user Username.
+ * @returns A Promise that resolves with the RawUser object, or rejects with an error.
+ * @throws Error if fetching user data fails.
+ */
+export async function fetchUserByUsername(username: string): Promise<RawUser> {
+  noStore();
+  try {
+    const { rows } = await sql<RawUser>`
+      SELECT *
+      FROM users
+      WHERE username = ${username};
+    `;
+    return rows[0];
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user.");
@@ -27,14 +51,17 @@ export async function fetchUser(arg: string): Promise<RawUser> {
  *
  * @param propertyId - The unique identifier of the property.
  * @returns A Promise that resolves with the RawProperty object, or rejects with an error.
- * @throws Error if the property ID is invalid or if fetching the property fails.
+ * @throws Error if fetching the property fails.
  */
 export async function fetchProperty(propertyId: string): Promise<RawProperty> {
-  if (!isUUID(propertyId))
-    throw new Error("Received an invalid argument: " + propertyId);
+  noStore();
   try {
-    const result =
-      await sql<RawProperty>`SELECT * FROM properties WHERE id = ${propertyId};`;
+    const result = await sql<RawProperty>`
+      SELECT *
+      FROM properties
+      WHERE id = ${propertyId}
+      ORDER BY id;
+    `;
     return result.rows[0];
   } catch (error) {
     console.error("Database Error:", error);
@@ -42,22 +69,32 @@ export async function fetchProperty(propertyId: string): Promise<RawProperty> {
   }
 }
 
-/**
- * Fetches properties from the database.
- *
- * @param agentId - (Optional) The unique identifier of the agent. If provided, fetches properties managed by that agent.
- * @returns A Promise that resolves with an array of RawProperty objects, or rejects with an error.
- * @throws Error if the agent ID is invalid or if fetching properties fails.
- */
 export async function fetchProperties(
-  agentId?: string
+  includeDelisted?: boolean
 ): Promise<RawProperty[]> {
-  if (agentId && !isUUID(agentId))
-    throw new Error("Received an invalid argument: " + agentId);
+  noStore();
   try {
-    const result = await sql<RawProperty>`SELECT * FROM properties${
-      agentId ? ` WHERE agent_id = ${agentId}` : ""
-    };`;
+    const result = includeDelisted
+      ? await sql<RawProperty>`SELECT * FROM properties ORDER BY id;`
+      : await sql<RawProperty>`SELECT * FROM properties WHERE delisted = false ORDER BY id;`;
+    return result.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch properties.");
+  }
+}
+
+export async function fetchPropertiesByAgent(
+  agentId: string
+): Promise<RawProperty[]> {
+  noStore();
+  try {
+    const result = await sql<RawProperty>`
+      SELECT *
+      FROM properties
+      WHERE agent_id = ${agentId}
+      ORDER BY id;
+    `;
     return result.rows;
   } catch (error) {
     console.error("Database Error:", error);

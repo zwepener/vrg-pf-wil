@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { name: "Home", href: "/home" },
+  { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Service", href: "/service" },
   { name: "Properties", href: "/properties" },
@@ -21,7 +21,7 @@ export default function NavLinks() {
           key={link.name}
           href={link.href}
           className={cn("navbar-link", {
-            active: pathname === link.href,
+            "text-[hsl(20,100%,65%)]": pathname === link.href,
           })}
           data-nav-link
         >

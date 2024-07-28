@@ -83,7 +83,71 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    border: none;
+    background: none;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: white;
+    overflow-x: hidden;
+  }
+
+  a,
+  img,
+  span,
+  button {
+    display: block;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(220, 30%, 50%);
+    border-left: 2px solid white;
+  }
+
+  button,
+  a {
+    transition: 0.25s ease;
   }
 }

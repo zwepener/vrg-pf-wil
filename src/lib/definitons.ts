@@ -2,14 +2,23 @@ import { z } from "zod";
 
 export const RawUserSchema = z.object({
   id: z.string(),
-  username: z.string(),
-  password: z.string(),
-  firstname: z.string(),
-  lastname: z.string(),
-  email: z.string().email().nullable(),
+  username: z
+    .string()
+    .min(1, "Username is empty.")
+    .max(255, "Username is too long (Max is 255 characters)."),
+  password: z.string().min(1, "Password is empty."),
+  firstname: z
+    .string()
+    .min(1, "Firstname is empty.")
+    .max(255, "Firstname is too long (Max is 255 characters)."),
+  lastname: z
+    .string()
+    .min(1, "Lastname is empty.")
+    .max(255, "Lastname is too long (Max is 255 characters)."),
+  email: z.string().email("Not a valid email.").nullable(),
   avatar_url: z.string().url().nullable(),
-  favorites: z.array(z.string().uuid()).nullable(),
-  wishlist: z.array(z.string().uuid()).nullable(),
+  favorites: z.string().array().nullable(),
+  wishlist: z.string().array().nullable(),
   role: z.union([z.literal("admin"), z.literal("agent"), z.literal("user")]),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
@@ -27,26 +36,39 @@ export const NewUserSchema = RawUserSchema.pick({
 });
 export type NewUser = z.infer<typeof NewUserSchema>;
 
-const EditableUserPropertiesSchema = RawUserSchema.omit({
+export const EditableUserSchema = RawUserSchema.omit({
   id: true,
   created_at: true,
   updated_at: true,
 });
-export type EditableUserProperties = z.infer<
-  typeof EditableUserPropertiesSchema
->;
+export type EditableUser = z.infer<typeof EditableUserSchema>;
 
 export const RawPropertySchema = z.object({
   id: z.string(),
   agent_id: z.string(),
   title: z.string().min(1, "Property Title is empty."),
   description: z.string().min(1, "Property Description is empty."),
+  address: z.string(),
+  bedrooms: z
+    .number()
+    .min(1, "Property cannot have less than 1 bedrooms.")
+    .max(10, "Bedroom maximum limit is 10.")
+    .refine(
+      (amount) => Number.isInteger(amount) && amount > 0,
+      "Bedroom amount must be an integer."
+    ),
+  bathrooms: z
+    .number()
+    .min(1, "Property cannot have less than 1 bathrooms.")
+    .max(8, "Bathroom maximum limit is 8.")
+    .refine(
+      (amount) => Number.isInteger(amount) && amount > 0,
+      "Bathroom amount must be an integer."
+    ),
   listing_type: z.union([z.literal("rent"), z.literal("sell")]),
   price: z.number().min(0, "Property's price cannot be less than 0."),
-  bedrooms: z.number().min(1, "Property cannot have less than 1 bedrooms."),
-  bathrooms: z.number().min(1, "Property cannot have less than 1 bathrooms."),
-  address: z.string(),
-  images: z.array(z.string().url()),
+  banner_url: z.string().url().nullable(),
+  images: z.string().url().array().nullable(),
   featured: z.boolean(),
   delisted: z.boolean(),
   added_at: z.coerce.date(),
@@ -62,30 +84,38 @@ export const NewPropertySchema = RawPropertySchema.pick({
   bedrooms: true,
   bathrooms: true,
   address: true,
-}).extend({
-  images: z.array(
-    z
-      .instanceof(File)
-      .refine(
-        (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),
-        "We only support image uploads."
-      )
-      .refine(
-        (file) => file.size <= 1024 * 1024 * 4.5,
-        "File is bigger than 4.5 MB."
-      )
-  ),
 });
 export type NewProperty = z.infer<typeof NewPropertySchema>;
 
-const EditablePropertyPropertiesSchema = RawPropertySchema.omit({
-  id: true,
-  added_at: true,
-  updated_at: true,
+export const EditablePropertySchema = RawPropertySchema.pick({
+  agent_id: true,
+  title: true,
+  description: true,
+  listing_type: true,
+  price: true,
+  bedrooms: true,
+  bathrooms: true,
+  address: true,
+  banner_url: true,
+  images: true,
+  featured: true,
+  delisted: true,
 });
-export type EditablePropertyProperties = z.infer<
-  typeof EditablePropertyPropertiesSchema
->;
+export type EditableProperty = z.infer<typeof EditablePropertySchema>;
+
+export const AddPropertyAPISchema = NewPropertySchema.extend({
+  banner_img: z
+    .instanceof(File)
+    .refine(
+      (file) => /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(file.name),
+      "We only support image uploads."
+    )
+    .refine(
+      (file) => file.size <= 1024 * 1024 * 4.5,
+      "File is bigger than 4.5 MB."
+    ),
+});
+export type AddPropertyAPI = z.infer<typeof AddPropertyAPISchema>;
 
 declare module "next-auth" {
   interface Session {

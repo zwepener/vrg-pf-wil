@@ -1,9 +1,27 @@
 import { sql } from "@vercel/postgres";
 import type {
-  EditableUserProperties,
-  EditablePropertyProperties,
+  EditableUser,
+  EditableProperty,
+  NewUser,
+  NewProperty,
+  RawProperty,
 } from "./definitons";
-import { isUUID } from "./utils";
+
+export async function insertUser(payload: NewUser): Promise<void> {
+  const { username, password, firstname, lastname } = payload;
+
+  const bcrypt = require("bcrypt");
+  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    await sql`
+      INSERT INTO users (username, password, firstname, lastname)
+      VALUES (${username}, ${hashedPassword}, ${firstname}, ${lastname});
+    `;
+  } catch (error) {
+    console.error("Database Error:\n", error);
+    throw new Error("Failed to insert user.");
+  }
+}
 
 /**
  * Updates a User property in the database.
@@ -11,25 +29,37 @@ import { isUUID } from "./utils";
  * @param userId - The unique identifier of the user.
  * @param property - The property to update (e.g., 'username', 'email', etc.).
  * @param newValue - The new value for the specified property.
- * @throws Error if the user ID is invalid or if the update fails.
+ * @throws Error if the update fails.
  */
-export async function updateUserProp<K extends keyof EditableUserProperties>(
+export async function updateUserProp<K extends keyof EditableUser>(
   userId: string,
   property: K,
-  newValue: EditableUserProperties[K]
+  newValue: EditableUser[K]
 ): Promise<void> {
-  if (!isUUID(userId))
-    throw new Error("Received an invalid argument: " + userId);
+  let value: any = newValue;
+  switch (property) {
+    case "password":
+      const bcrypt = require("bcrypt");
+      value = await bcrypt.hash(newValue, 10);
+      break;
+    case "favorites" || "wishlist":
+      if (newValue instanceof Array) {
+        value = newValue.join(", ");
+      }
+      break;
+    default:
+      break;
+  }
   try {
     await sql`
       UPDATE users
       SET
-        ${property} = ${newValue instanceof Array ? `{${newValue.join(", ")}}` : newValue},
+        ${property} = ${value},
         updated_at = CURRENT_TIMESTAMP
       WHERE id = ${userId};
     `;
   } catch (error) {
-    console.error("Database Error:", error);
+    console.error("Database Error:\n", error);
     throw new Error("Failed to update user.");
   }
 }
@@ -39,16 +69,14 @@ export async function updateUserProp<K extends keyof EditableUserProperties>(
  *
  * @param userId - The unique identifier of the user.
  * @param payload - An object containing properties to update (e.g., 'username', 'email', etc.).
- * @throws Error if the user ID is invalid or if the update fails.
+ * @throws Error if the update fails.
  */
 export async function updateUser(
   userId: string,
-  payload: EditableUserProperties
+  payload: EditableUser
 ): Promise<void> {
-  if (!isUUID(userId))
-    throw new Error("Received an invalid argument: " + userId);
   try {
-    const keys = Object.keys(payload) as (keyof EditableUserProperties)[];
+    const keys = Object.keys(payload) as (keyof EditableUser)[];
     await sql`
       UPDATE users
       SET
@@ -57,42 +85,52 @@ export async function updateUser(
       WHERE id = ${userId};
     `;
   } catch (error) {
-    console.error("Database Error:", error);
+    console.error("Database Error:\n", error);
     throw new Error("Failed to update user.");
   }
 }
 
-/**
- * Updates a Real Estate Property property in the database.
- *
- * @param propertyId - The unique identifier of the property.
- * @param property - The property to update (e.g., 'price', 'description', etc.).
- * @param newValue - The new value for the specified property.
- * @throws Error if the property ID is invalid or if the update fails.
- */
-export async function updatePropertyProp<
-  K extends keyof EditablePropertyProperties
->(
-  propertyId: string,
-  property: K,
-  newValue: EditablePropertyProperties[K]
-): Promise<void> {
-  if (!isUUID(propertyId))
-    throw new Error("Received an invalid argument: " + propertyId);
-  if (newValue instanceof Array) {
-
+export async function insertPropertyGetId(
+  payload: NewProperty & { agent_id: string }
+): Promise<string> {
+  const {
+    agent_id,
+    title,
+    description,
+    listing_type,
+    price,
+    bedrooms,
+    bathrooms,
+    address,
+  } = payload;
+  try {
+    const { rows } = await sql<RawProperty>`
+      INSERT INTO properties (agent_id, title, description, listing_type, price, bedrooms, bathrooms, address)
+      VALUES (${agent_id}, ${title}, ${description}, ${listing_type}, ${price}, ${bedrooms}, ${bathrooms}, ${address})
+      RETURNING id;
+    `;
+    return rows[0].id;
+  } catch (error) {
+    console.error("Error inserting property:", error);
+    throw error;
   }
+}
+
+export async function updatePropertyBanner(
+  propertyId: string,
+  bannerUrl: string
+): Promise<void> {
   try {
     await sql`
       UPDATE properties
       SET
-        ${property} = ${newValue instanceof Array ? `{${newValue.join(", ")}}` : newValue},
+        banner_url = ${bannerUrl},
         updated_at = CURRENT_TIMESTAMP
-      WHERE id = ${propertyId}
+      WHERE id = ${propertyId};
     `;
   } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to update property.");
+    console.error("Database Error:\n", error);
+    throw new Error("Failed to update property banner.");
   }
 }
 
@@ -101,16 +139,14 @@ export async function updatePropertyProp<
  *
  * @param propertyId - The unique identifier of the property.
  * @param payload - An object containing properties to update (e.g., 'price', 'description', etc.).
- * @throws Error if the property ID is invalid or if the update fails.
+ * @throws Error if the update fails.
  */
 export async function updateProperty(
   propertyId: string,
-  payload: EditablePropertyProperties
+  payload: EditableProperty
 ): Promise<void> {
-  if (!isUUID(propertyId))
-    throw new Error("Received an invalid argument: " + propertyId);
   try {
-    const keys = Object.keys(payload) as (keyof EditablePropertyProperties)[];
+    const keys = Object.keys(payload) as (keyof EditableProperty)[];
     await sql`
       UPDATE properties
       SET
@@ -119,7 +155,7 @@ export async function updateProperty(
       WHERE id = ${propertyId};
     `;
   } catch (error) {
-    console.error("Database Error:", error);
+    console.error("Database Error:\n", error);
     throw new Error("Failed to update user.");
   }
 }
