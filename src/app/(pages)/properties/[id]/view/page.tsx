@@ -17,6 +17,7 @@ export default async function Page({
   params: { id: string };
 }) {
   const {
+    agent_id: agentId,
     banner_url: bannerUrl,
     images: imageUrls,
     address,
@@ -29,30 +30,41 @@ export default async function Page({
     <div className="p-5">
       <section id="details">
         <p className="section-subtitle">Property Details</p>
-        <div className="flex items-center space-x-5">
+        <div className="md:flex md:items-center md:space-x-5">
           <Image
             src={bannerUrl ?? PropertyBanner}
             alt="Property Banner"
             width={500}
             height={500}
           />
+          <Separator className="my-5 lg:hidden" />
           <div className="grow">
             <ul className="space-y-2">
               {Object.entries(property).map(([key, value]) => (
                 <li key={key}>{`${key}: ${value}`}</li>
               ))}
             </ul>
-            {session?.user.role === "admin" && (
-              <div>
-                <Separator className="my-5" />
-                <Button className="space-x-1">
-                  <FaIcon icon="pen-to-square" />
-                  <Link href={`/properties/${propertyId}/edit`}>Edit</Link>
-                </Button>
-              </div>
-            )}
           </div>
         </div>
+        {(session?.user.role === "admin" || session?.user.id === agentId) && (
+          <div>
+            <Separator className="my-5" />
+            <div className="flex space-x-2">
+              <Button>
+                <Link
+                  href={`/properties/${propertyId}/edit`}
+                  className="flex items-center space-x-1"
+                >
+                  <FaIcon icon="pen-to-square" />
+                  <span>Edit</span>
+                </Link>
+              </Button>
+              <Button>Toggle Hidden</Button>
+              <Separator orientation="vertical" />
+              <Button variant="destructive">Remove</Button>
+            </div>
+          </div>
+        )}
       </section>
       <Separator className="my-5" />
       <section id="images" className="text-center">

@@ -5,11 +5,14 @@ import UserAvatar from "@/assets/images/user-avatar.png";
 import FaIcon from "@/components/ui/fa-icon";
 import { fetchUserById } from "@/lib/data";
 import type { RawProperty } from "@/lib/definitons";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface PropertyCardProps {
   property: RawProperty;
+  variant?: "full" | "mini";
+  className?: string;
 }
 export default async function PropertyCard({
   property: {
@@ -25,6 +28,8 @@ export default async function PropertyCard({
     bathrooms,
     images,
   },
+  variant = "full",
+  className,
 }: PropertyCardProps) {
   const {
     id: userId,
@@ -35,12 +40,14 @@ export default async function PropertyCard({
   } = await fetchUserById(agent_id);
 
   return (
-    <div className="property-card">
+    <div className={cn("property-card", className)}>
       <figure className="card-banner">
         <Link href={`/properties/${propertyId}/view`}>
           <Image
             src={banner_url ?? PropertyBanner}
             alt={title}
+            width={500}
+            height={500}
             className="w-100"
           />
         </Link>
@@ -59,13 +66,15 @@ export default async function PropertyCard({
             <FaIcon icon="location-dot" />
             <address>{address}</address>
           </Link>
-          <Link
-            href={`/properties/${propertyId}/view#images`}
-            className="banner-actions-btn"
-          >
-            <FaIcon icon="camera" />
-            <span>{images?.length ?? 0}</span>
-          </Link>
+          {variant === "full" && (
+            <Link
+              href={`/properties/${propertyId}/view#images`}
+              className="banner-actions-btn"
+            >
+              <FaIcon icon="camera" />
+              <span>{images?.length ?? 0}</span>
+            </Link>
+          )}
         </div>
       </figure>
       <div className="card-content">
@@ -77,38 +86,42 @@ export default async function PropertyCard({
           <Link href={`/properties/${propertyId}/view`}>{title}</Link>
         </h3>
         <p className="card-text select-none">{description}</p>
-        <ul className="card-list">
-          <li className="card-item select-none">
-            <strong>{bedrooms}</strong>
-            <FaIcon icon="bed" />
-            <span>Bedrooms</span>
-          </li>
-          <li className="card-item select-none">
-            <strong>{bathrooms}</strong>
-            <FaIcon icon="person" />
-            <span>Bathrooms</span>
-          </li>
-        </ul>
+        {variant === "full" && (
+          <ul className="card-list">
+            <li className="card-item select-none">
+              <strong>{bedrooms}</strong>
+              <FaIcon icon="bed" />
+              <span>Bedrooms</span>
+            </li>
+            <li className="card-item select-none">
+              <strong>{bathrooms}</strong>
+              <FaIcon icon="person" />
+              <span>Bathrooms</span>
+            </li>
+          </ul>
+        )}
       </div>
-      <div className="card-footer">
-        <div className="card-author">
-          <figure className="author-avatar">
-            <Image
-              src={avatar_url ?? UserAvatar}
-              alt={"User"}
-              className="w-100"
-            />
-          </figure>
-          <div>
-            <p className="author-name">
-              <Link href={`/users/${userId}/view`}>
-                {`${firstname} ${lastname}`}
-              </Link>
-            </p>
-            <p className="author-title select-none">{role}</p>
+      {variant === "full" && (
+        <div className="card-footer">
+          <div className="card-author">
+            <figure className="author-avatar">
+              <Image
+                src={avatar_url ?? UserAvatar}
+                alt={"User"}
+                className="w-100"
+              />
+            </figure>
+            <div>
+              <p className="author-name">
+                <Link href={`/users/${userId}/view`}>
+                  {`${firstname} ${lastname}`}
+                </Link>
+              </p>
+              <p className="author-title select-none">{role}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

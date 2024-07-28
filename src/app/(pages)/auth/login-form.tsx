@@ -55,7 +55,7 @@ export default function LoginForm() {
     },
   });
 
-  async function onSubmit({ username, password }: LoginUser) {
+  async function onValidSubmit({ username, password }: LoginUser) {
     try {
       setIsLoading(true);
 
@@ -95,14 +95,14 @@ export default function LoginForm() {
         ? "Redirecting you back to your requested content."
         : "Redirecting you to the Home Page.",
     });
-    router.push(callbackUrl ?? "/");
+    router.push(callbackUrl ? callbackUrl : "/");
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit, (values) => {
-          console.log(values);
+        onSubmit={form.handleSubmit(onValidSubmit, (values) => {
+          console.debug(values);
           toast({
             title: "Incomplete Form",
             description: "Please fill out all of the required fields.",
@@ -141,7 +141,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full space-x-1" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="w-full space-x-1">
           {isLoading ? (
             <>
               <LoadingSVG />

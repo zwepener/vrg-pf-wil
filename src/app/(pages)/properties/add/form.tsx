@@ -277,7 +277,7 @@ export default function AddForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full space-x-1">
+        <Button type="submit" disabled={isLoading} className="w-full space-x-1">
           {isLoading ? (
             <>
               <LoadingSVG />

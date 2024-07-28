@@ -1,11 +1,18 @@
+"use server";
+
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Logo } from "../assets";
 import Container from "../container";
 import FaIcon from "../fa-icon";
+import MenuSheet from "./menu-sheet";
 import NavLinks from "./nav-links";
 import ProfileMenu from "./profile-menu";
 
-export function TopNav() {
+export async function TopNav() {
+  const session = await getServerSession(authOptions);
+
   return (
     <header className="header" data-header>
       <div className="overlay" data-overlay></div>
@@ -24,11 +31,15 @@ export function TopNav() {
             </li>
           </ul>
 
-          <div className="wrapper flex">
-            <Link href="/properties/add" className="header-top-btn">
-              Add Listing
-            </Link>
-          </div>
+          {session &&
+            (session.user.role === "admin" ||
+              session.user.role === "agent") && (
+              <div className="wrapper flex">
+                <Link href="/properties/add" className="header-top-btn">
+                  Add Listing
+                </Link>
+              </div>
+            )}
         </Container>
       </div>
 
@@ -57,14 +68,7 @@ export function TopNav() {
           <div className="header-bottom-actions">
             <ProfileMenu />
 
-            <button
-              className="header-bottom-actions-btn"
-              data-nav-open-btn
-              aria-label="Open Menu"
-            >
-              <FaIcon icon="bars" />
-              <span>Menu</span>
-            </button>
+            <MenuSheet className="header-bottom-actions-btn" />
           </div>
         </Container>
       </div>
@@ -72,7 +76,7 @@ export function TopNav() {
   );
 }
 
-export function FooterNav() {
+export async function FooterNav() {
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -87,7 +91,10 @@ export function FooterNav() {
 
             <ul className="contact-list">
               <li>
-                <a href="mailto:vrg.realhome@gmail.com" className="contact-link">
+                <a
+                  href="mailto:vrg.realhome@gmail.com"
+                  className="contact-link"
+                >
                   <FaIcon icon="envelope" />
                   <span>vrg.realhome@gmail.com</span>
                 </a>

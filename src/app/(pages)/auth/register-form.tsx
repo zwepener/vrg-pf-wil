@@ -15,6 +15,7 @@ import LoadingSVG from "@/components/ui/loading-svg";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { NewUserSchema, type NewUser } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,6 +31,8 @@ type RegisterUser = z.infer<typeof formSchema>;
 export default function RegisterForm() {
   const { toast } = useToast();
 
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterUser>({
@@ -38,10 +41,12 @@ export default function RegisterForm() {
       username: "",
       password: "",
       confirmPass: "",
+      firstname: "",
+      lastname: "",
     },
   });
 
-  async function onSubmit({ username, ...values }: RegisterUser) {
+  async function onValidSubmit({ username, ...values }: RegisterUser) {
     try {
       setIsLoading(true);
       const requestData = {
@@ -86,12 +91,13 @@ export default function RegisterForm() {
       description:
         "Your new account was successfully created. You may now proceed to log in.",
     });
+    router.refresh();
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit, (values) => {
+        onSubmit={form.handleSubmit(onValidSubmit, (values) => {
           console.log(values);
           toast({
             title: "Incomplete Form",

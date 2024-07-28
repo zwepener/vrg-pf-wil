@@ -8,12 +8,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import type { RawProperty } from "@/lib/definitons";
-import PropertyCard from "./property-card";
+import PropertyCard from "@/components/ui/property-card";
 
 interface FeaturedProps {
   properties: RawProperty[];
+  variant?: "full" | "mini";
 }
-export default async function Featured({ properties }: FeaturedProps) {
+export default async function PropertyCarousel({
+  properties,
+  variant = "full",
+}: FeaturedProps) {
   return (
     <div className="p-10">
       <Carousel opts={{ align: "start", loop: true }} className="w-full">
@@ -23,7 +27,7 @@ export default async function Featured({ properties }: FeaturedProps) {
               key={property.id}
               className="md:basis-1/2 lg:basis-1/3"
             >
-              <PropertyCard property={property} />
+              <PropertyCard property={property} variant={variant} />
             </CarouselItem>
           ))}
         </CarouselContent>
