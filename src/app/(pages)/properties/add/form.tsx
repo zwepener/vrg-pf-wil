@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingSVG from "@/components/ui/loading-svg";
+import PlacesInput from "@/components/ui/places-autocomplete-input";
 import {
   Select,
   SelectContent,
@@ -24,15 +25,11 @@ import { useToast } from "@/components/ui/toast/use-toast";
 import type { AddPropertyAPI } from "@/lib/definitons";
 import { NewPropertySchema } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoadScript } from "@react-google-maps/api";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import type { NextResponse } from "next/server";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { getGeocode } from "use-places-autocomplete";
 import { z } from "zod";
-import AutoCompleteInput from "./auto-complete";
 
 const formSchema = NewPropertySchema.extend({
   banner_img: z
@@ -48,16 +45,10 @@ const formSchema = NewPropertySchema.extend({
 export type FormType = z.infer<typeof formSchema>;
 
 export default function AddForm() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_SECRET as string,
-    libraries: ["places"],
-  });
-
   const { toast } = useToast();
-  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
 
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
@@ -108,227 +99,198 @@ export default function AddForm() {
     } finally {
       setIsLoading(false);
     }
-    return toast({
-      title: "File Uploaded",
-      description: `File '${formData.get(
-        "filename"
-      )}' was successfully uploaded.`,
+    form.reset();
+    toast({
+      title: "Property Added",
+      description: "A new property was successfully added.",
     });
   }
 
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      form.reset();
-      router.refresh();
-    }
-  }, [form.formState.isSubmitSuccessful, form, router]);
-
   return (
-    <>
-      {isLoaded ? (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 w-full"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter a property title . . ."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter a property description . . ."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <AutoCompleteInput
-                      field={field}
-                      onAddressSelect={(address) => {
-                        getGeocode({ address: address }).then((results) => {
-                          form.setValue("address", results[0].place_id);
-                        });
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="bedrooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bedrooms</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="number"
-                      placeholder="Enter the amount of bedrooms this property has . . ."
-                      onChange={(event) => {
-                        form.setValue("bedrooms", parseInt(event.target.value));
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="bathrooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bathrooms</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="number"
-                      placeholder="Enter the amount of bathrooms this property has . . ."
-                      onChange={(event) => {
-                        form.setValue(
-                          "bathrooms",
-                          parseInt(event.target.value)
-                        );
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="listing_type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Listing Type</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a Type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="rent">To Let</SelectItem>
-                        <SelectItem value="sell">For Sale</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="number"
-                      placeholder="Enter a property price . . ."
-                      onChange={(event) => {
-                        form.setValue("price", parseFloat(event.target.value));
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="banner_img"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Banner</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      accept=".jpg, .jpeg, .png, .webp, .bmp"
-                      {...bannerRef}
-                      onChange={(event) => {
-                        field.onChange(event.target?.files?.[0] ?? undefined);
-                        if (!event.target.files || !event.target.files[0]) {
-                          return setPreviewImageURL(null);
-                        }
-                        const reader = new FileReader();
-                        reader.onload = (ev: ProgressEvent<FileReader>) => {
-                          if (!ev.target || !ev.target.result) {
-                            setPreviewImageURL(null);
-                          } else {
-                            setPreviewImageURL(ev.target.result as string);
-                          }
-                        };
-                        reader.readAsDataURL(event.target.files[0]);
-                      }}
-                    />
-                  </FormControl>
-                  <Image
-                    src={previewImageURL ?? PropertyBanner}
-                    alt="Image Preview"
-                    width={300}
-                    height={300}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full space-x-1">
-              {isLoading ? (
-                <>
-                  <LoadingSVG />
-                  <span>Adding property . . .</span>
-                </>
-              ) : (
-                <>
-                  <FaIcon icon="plus" />
-                  <span>Add Property</span>
-                </>
-              )}
-            </Button>
-          </form>
-        </Form>
-      ) : (
-        <>
-          <LoadingSVG />
-          <span>Loading . . .</span>
-        </>
-      )}
-    </>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter a property title . . ." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter a property description . . ."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <PlacesInput
+                  onAddressSelect={(address) => {
+                    form.setValue("address", address);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="bedrooms"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bedrooms</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="number"
+                  placeholder="Enter the amount of bedrooms this property has . . ."
+                  onChange={(event) => {
+                    form.setValue("bedrooms", parseInt(event.target.value));
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="bathrooms"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bathrooms</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="number"
+                  placeholder="Enter the amount of bathrooms this property has . . ."
+                  onChange={(event) => {
+                    form.setValue("bathrooms", parseInt(event.target.value));
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="listing_type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Listing Type</FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="rent">To Let</SelectItem>
+                    <SelectItem value="sell">For Sale</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Price</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="number"
+                  placeholder="Enter a property price . . ."
+                  onChange={(event) => {
+                    form.setValue("price", parseFloat(event.target.value));
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="banner_img"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Banner</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  accept=".jpg, .jpeg, .png, .webp, .bmp"
+                  {...bannerRef}
+                  onChange={(event) => {
+                    field.onChange(event.target?.files?.[0] ?? undefined);
+                    if (!event.target.files || !event.target.files[0]) {
+                      return setPreviewImageURL(null);
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (ev: ProgressEvent<FileReader>) => {
+                      if (!ev.target || !ev.target.result) {
+                        setPreviewImageURL(null);
+                      } else {
+                        setPreviewImageURL(ev.target.result as string);
+                      }
+                    };
+                    reader.readAsDataURL(event.target.files[0]);
+                  }}
+                />
+              </FormControl>
+              <Image
+                src={previewImageURL ?? PropertyBanner}
+                alt="Image Preview"
+                width={300}
+                height={300}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full space-x-1">
+          {isLoading ? (
+            <>
+              <LoadingSVG />
+              <span>Adding property . . .</span>
+            </>
+          ) : (
+            <>
+              <FaIcon icon="plus" />
+              <span>Add Property</span>
+            </>
+          )}
+        </Button>
+      </form>
+    </Form>
   );
 }
