@@ -12,12 +12,12 @@ import { unstable_noStore as noStore } from "next/cache";
 export async function fetchUserById(userId: string): Promise<RawUser> {
   noStore();
   try {
-    const result = await sql<RawUser>`
+    const { rows } = await sql<RawUser>`
       SELECT *
       FROM users
       WHERE id = ${userId};
     `;
-    return result.rows[0];
+    return rows[0];
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user.");
@@ -34,12 +34,12 @@ export async function fetchUserById(userId: string): Promise<RawUser> {
 export async function fetchUserByUsername(username: string): Promise<RawUser> {
   noStore();
   try {
-    const result = await sql<RawUser>`
+    const { rows } = await sql<RawUser>`
       SELECT *
       FROM users
       WHERE username = ${username};
     `;
-    return result.rows[0];
+    return rows[0];
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user.");
@@ -57,10 +57,11 @@ export async function fetchProperty(propertyId: string): Promise<RawProperty> {
   noStore();
   try {
     const result = await sql<RawProperty>`
-        SELECT *
-        FROM properties
-        WHERE id = ${propertyId};
-      `;
+      SELECT *
+      FROM properties
+      WHERE id = ${propertyId}
+      ORDER BY id;
+    `;
     return result.rows[0];
   } catch (error) {
     console.error("Database Error:", error);
@@ -74,8 +75,8 @@ export async function fetchProperties(
   noStore();
   try {
     const result = includeDelisted
-      ? await sql<RawProperty>`SELECT * FROM properties;`
-      : await sql<RawProperty>`SELECT * FROM properties WHERE delisted = false;`;
+      ? await sql<RawProperty>`SELECT * FROM properties ORDER BY id;`
+      : await sql<RawProperty>`SELECT * FROM properties WHERE delisted = false ORDER BY id;`;
     return result.rows;
   } catch (error) {
     console.error("Database Error:", error);
@@ -91,7 +92,8 @@ export async function fetchPropertiesByAgent(
     const result = await sql<RawProperty>`
       SELECT *
       FROM properties
-      WHERE agent_id = ${agentId};
+      WHERE agent_id = ${agentId}
+      ORDER BY id;
     `;
     return result.rows;
   } catch (error) {
