@@ -15,7 +15,7 @@ import LoadingSVG from "@/components/ui/loading-svg";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { NewUserSchema, type NewUser } from "@/lib/definitons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
