@@ -5,6 +5,11 @@ import { fetchProperty } from "@/lib/data";
 import Image from "next/image";
 import Map from "./map";
 import { Separator } from "@/components/ui/separator";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { Button } from "@/components/ui/button";
+import FaIcon from "@/components/ui/fa-icon";
 
 export default async function Page({
   params: { id: propertyId },
@@ -18,24 +23,36 @@ export default async function Page({
     ...property
   } = await fetchProperty(propertyId);
 
+  const session = await getServerSession(authOptions);
+
   return (
-    <>
-      <section id="banner" className="flex justify-center">
-        <Image
-          src={bannerUrl ?? PropertyBanner}
-          alt="Property Banner"
-          width={500}
-          height={500}
-        />
-      </section>
-      <Separator className="my-5" />
+    <div className="p-5">
       <section id="details">
         <p className="section-subtitle">Property Details</p>
-        <ul>
-          {Object.entries(property).map(([key, value]) => (
-            <li key={key}>{`${key}: ${value}`}</li>
-          ))}
-        </ul>
+        <div className="flex items-center space-x-5">
+          <Image
+            src={bannerUrl ?? PropertyBanner}
+            alt="Property Banner"
+            width={500}
+            height={500}
+          />
+          <div className="grow">
+            <ul className="space-y-2">
+              {Object.entries(property).map(([key, value]) => (
+                <li key={key}>{`${key}: ${value}`}</li>
+              ))}
+            </ul>
+            {session?.user.role === "admin" && (
+              <div>
+                <Separator className="my-5" />
+                <Button className="space-x-1">
+                  <FaIcon icon="pen-to-square" />
+                  <Link href={`/properties/${propertyId}/edit`}>Edit</Link>
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
       </section>
       <Separator className="my-5" />
       <section id="images" className="text-center">
@@ -53,6 +70,6 @@ export default async function Page({
         <p className="section-subtitle">Map Pin</p>
         <Map address={address} />
       </section>
-    </>
+    </div>
   );
 }
