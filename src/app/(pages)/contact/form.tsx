@@ -1,10 +1,7 @@
 "use client";
 
-import { useToast } from "@/components/ui/toast/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import FaIcon from "@/components/ui/fa-icon";
 import {
   Form,
   FormControl,
@@ -14,11 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import LoadingSVG from "@/components/ui/loading-svg";
-import FaIcon from "@/components/ui/fa-icon";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   email: z.string().email(),

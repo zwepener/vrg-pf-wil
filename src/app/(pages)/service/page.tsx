@@ -6,6 +6,7 @@ import service_3 from "@/assets/images/service-3.png";
 import Container from "@/components/ui/container";
 import FaIcon from "@/components/ui/fa-icon";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Page() {
   return (
@@ -21,16 +22,17 @@ export default async function Page() {
                   <Image src={service_1} alt="Service icon" />
                 </div>
                 <h3 className="h3 card-title">
-                  <a href="#">Buy a home</a>
+                  <Link href="/properties">Buy a home</Link>
                 </h3>
                 <p className="card-text">
-                  over 1 million+ homes for sale available on the website, we
-                  can match you with a house you will want to call home.
+                  over 1 million+ homes (not really) for sale available on the
+                  website, we can match you with a house you will want to call
+                  home.
                 </p>
-                <a href="#" className="card-link">
-                  <span>Find A Home</span>
+                <Link href="/properties" className="card-link">
+                  <span>Buy A Home</span>
                   <FaIcon icon="arrow-right-long" />
-                </a>
+                </Link>
               </div>
             </li>
 
@@ -40,16 +42,17 @@ export default async function Page() {
                   <Image src={service_2} alt="Service icon" />
                 </div>
                 <h3 className="h3 card-title">
-                  <a href="#">Rent a home</a>
+                  <Link href="/properties">Rent a home</Link>
                 </h3>
                 <p className="card-text">
-                  over 1 million+ homes for sale available on the website, we
-                  can match you with a house you will want to call home.
+                  over 1 million+ homes (not really) for sale available on the
+                  website, we can match you with a house you will want to call
+                  home.
                 </p>
-                <a href="#" className="card-link">
-                  <span>Find A Home</span>
+                <Link href="/properties" className="card-link">
+                  <span>Rent A Home</span>
                   <FaIcon icon="arrow-right-long" />
-                </a>
+                </Link>
               </div>
             </li>
 
@@ -59,16 +62,17 @@ export default async function Page() {
                   <Image src={service_3} alt="Service icon" />
                 </div>
                 <h3 className="h3 card-title">
-                  <a href="#">Sell a home</a>
+                  <Link href="/properties/add">Sell a home</Link>
                 </h3>
                 <p className="card-text">
-                  over 1 million+ homes for sale available on the website, we
-                  can match you with a house you will want to call home.
+                  over 1 million+ homes (not really) for sale available on the
+                  website, we can match you with a house you will want to call
+                  home.
                 </p>
-                <a href="#" className="card-link">
-                  <span>Find A Home</span>
+                <Link href="/properties/add" className="card-link">
+                  <span>Sell A Home</span>
                   <FaIcon icon="arrow-right-long" />
-                </a>
+                </Link>
               </div>
             </li>
           </ul>
