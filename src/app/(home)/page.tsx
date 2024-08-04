@@ -22,8 +22,9 @@ export default async function Page() {
               Find Your Dream House By Us
             </h2>
             <p className="text-[hsl(220,30%,50%)] text-sm md:text-base pl-[15px] border-solid border-l-[1px] border-l-[rgb(89,115,166)] mb-[30px]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore.
+              Please note that this website is not a real property listing
+              website. This is a college project and all of the properties
+              listed on this website is for demonstrative purposes only.
             </p>
             <Link
               href="/contact"

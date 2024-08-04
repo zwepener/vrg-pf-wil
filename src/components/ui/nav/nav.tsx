@@ -85,8 +85,9 @@ export async function FooterNav() {
             <Logo variant="light" />
 
             <p className="section-text">
-              Lorem Ipsum is simply dummy text of the and typesetting industry.
-              Lorem Ipsum is dummy text of the printing.
+              Please note that this website is not a real property listing
+              website. This is a college project and all of the properties
+              listed on this website is for demonstrative purposes only.
             </p>
 
             <ul className="contact-list">

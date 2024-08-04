@@ -1,13 +1,13 @@
 "use server";
 
 import Container from "@/components/ui/container";
+import ContactForm from "./form";
 
 export default async function Page() {
   return (
     <div className="contact">
       <Container className="container">
-        <span>Please contact us at:</span>
-        <a href="mailto:vrg.realhome@gmail.com">vrg.realhome@gmail.com</a>
+        <ContactForm />
       </Container>
     </div>
   );
