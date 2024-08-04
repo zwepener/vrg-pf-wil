@@ -12,7 +12,7 @@ import type { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const token = await getToken({ req: request });
-  if (!token || token.user.role === "user") return status401();
+  if (!token) return status401();
 
   const { id: userId } = token.user;
 
