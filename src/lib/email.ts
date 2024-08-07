@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer, { Transporter } from "nodemailer";
 import type { Options as SMTPTransportOptions } from "nodemailer/lib/smtp-transport";
 
 const options = {
@@ -28,4 +28,12 @@ async function main() {
 
   if (info.accepted) console.log("Message send: %s", info.response);
   else console.error("rejected");
+}
+
+export class Mailer {
+  private transporter: Transporter;
+  constructor() {
+    this.transporter = nodemailer.createTransport(options);
+  }
+  async send() {}
 }
